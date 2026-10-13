@@ -1,0 +1,604 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Interior Studio API",
+    "version": "1.0.0",
+    "description": "Снимок контракта be-respace для генерации клиента. Обновлять: pnpm api:fetch при запущенном backend."
+  },
+  "paths": {
+    "/api/v1/auth/register": {
+      "post": {
+        "operationId": "register",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/RegisterDtoRq" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Создан",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "login",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginDtoRq" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Вход выполнен",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/google": {
+      "post": {
+        "operationId": "loginGoogle",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GoogleLoginDtoRq" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Вход через Google",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/verify-email": {
+      "post": {
+        "operationId": "verifyEmail",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/VerifyEmailDtoRq" } } }
+        },
+        "responses": { "204": { "description": "Email подтверждён" } }
+      }
+    },
+    "/api/v1/auth/forgot-password": {
+      "post": {
+        "operationId": "forgotPassword",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ForgotPasswordDtoRq" } } }
+        },
+        "responses": { "202": { "description": "Письмо поставлено в отправку" } }
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "operationId": "resetPassword",
+        "tags": ["auth"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ResetPasswordDtoRq" } } }
+        },
+        "responses": { "204": { "description": "Пароль обновлён" } }
+      }
+    },
+    "/api/v1/user/verification/resend": {
+      "post": {
+        "operationId": "resendVerification",
+        "tags": ["account"],
+        "responses": { "202": { "description": "Письмо отправлено повторно" } }
+      }
+    },
+    "/api/v1/catalog": {
+      "get": {
+        "operationId": "getCatalog",
+        "tags": ["catalog"],
+        "responses": {
+          "200": {
+            "description": "Справочники",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/tokens/packages": {
+      "get": {
+        "operationId": "getTokenPackages",
+        "tags": ["tokens"],
+        "responses": {
+          "200": {
+            "description": "Пакеты токенов",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/TokenPackageDtoRs" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tokens/balance": {
+      "get": {
+        "operationId": "getTokenBalance",
+        "tags": ["tokens"],
+        "responses": {
+          "200": {
+            "description": "Баланс",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TokenBalanceDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/tokens/purchases": {
+      "post": {
+        "operationId": "purchaseTokens",
+        "tags": ["tokens"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TokenPurchaseDtoRq" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Платёж создан",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TokenPurchaseDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders": {
+      "post": {
+        "operationId": "createOrder",
+        "tags": ["orders"],
+        "responses": {
+          "201": {
+            "description": "Черновик",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateOrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}": {
+      "get": {
+        "operationId": "getOrder",
+        "tags": ["orders"],
+        "parameters": [{ "$ref": "#/components/parameters/OrderId" }],
+        "responses": {
+          "200": {
+            "description": "Заказ",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}/brief": {
+      "put": {
+        "operationId": "updateBrief",
+        "tags": ["orders"],
+        "parameters": [{ "$ref": "#/components/parameters/OrderId" }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BriefDtoRq" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Бриф сохранён",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}/submit": {
+      "post": {
+        "operationId": "submitOrder",
+        "tags": ["orders"],
+        "parameters": [{ "$ref": "#/components/parameters/OrderId" }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SubmitOrderDtoRq" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Заказ отправлен на генерацию",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}/extra-photos/submit": {
+      "post": {
+        "operationId": "submitExtraPhotos",
+        "tags": ["orders"],
+        "parameters": [{ "$ref": "#/components/parameters/OrderId" }],
+        "responses": {
+          "200": {
+            "description": "Генерация продолжена",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}/photos": {
+      "post": {
+        "operationId": "addPhoto",
+        "tags": ["photos"],
+        "parameters": [{ "$ref": "#/components/parameters/OrderId" }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddPhotoDtoRq" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Ссылка на загрузку",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PhotoUploadDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}/photos/{photoId}/complete": {
+      "post": {
+        "operationId": "completePhoto",
+        "tags": ["photos"],
+        "parameters": [
+          { "$ref": "#/components/parameters/OrderId" },
+          { "$ref": "#/components/parameters/PhotoId" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Загрузка подтверждена",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}/photos/{photoId}": {
+      "delete": {
+        "operationId": "deletePhoto",
+        "tags": ["photos"],
+        "parameters": [
+          { "$ref": "#/components/parameters/OrderId" },
+          { "$ref": "#/components/parameters/PhotoId" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Фото удалено",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/user/orders": {
+      "get": {
+        "operationId": "listOrders",
+        "tags": ["history"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "default": 0 }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": { "type": "integer", "default": 20 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "История",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/OrderHistoryPageDtoRs" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/orders/{id}": {
+      "get": {
+        "operationId": "getUserOrder",
+        "tags": ["history"],
+        "parameters": [{ "$ref": "#/components/parameters/OrderId" }],
+        "responses": {
+          "200": {
+            "description": "Заказ",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "OrderId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" }
+      },
+      "PhotoId": {
+        "name": "photoId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" }
+      }
+    },
+    "schemas": {
+      "OrderStatus": {
+        "type": "string",
+        "enum": [
+          "DRAFT",
+          "AWAITING_PHOTOS",
+          "AWAITING_PAYMENT",
+          "PAID",
+          "GENERATING",
+          "AWAITING_EXTRA_PHOTOS",
+          "DELIVERED",
+          "FAILED"
+        ]
+      },
+      "PhotoStatus": { "type": "string", "enum": ["PENDING_UPLOAD", "UPLOADED"] },
+      "ResultKind": { "type": "string", "enum": ["IMAGE", "PANORAMA"] },
+      "Tariff": { "type": "string", "enum": ["BASIC", "PANORAMA"] },
+      "RegisterDtoRq": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "LoginDtoRq": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "GoogleLoginDtoRq": {
+        "type": "object",
+        "required": ["idToken"],
+        "properties": { "idToken": { "type": "string" } }
+      },
+      "AuthDtoRs": {
+        "type": "object",
+        "required": ["accessToken", "tokenType", "email", "emailVerified"],
+        "properties": {
+          "accessToken": { "type": "string" },
+          "tokenType": { "type": "string" },
+          "email": { "type": "string" },
+          "emailVerified": { "type": "boolean" }
+        }
+      },
+      "VerifyEmailDtoRq": {
+        "type": "object",
+        "required": ["token", "code"],
+        "properties": {
+          "token": { "type": "string" },
+          "code": { "type": "string" }
+        }
+      },
+      "ForgotPasswordDtoRq": {
+        "type": "object",
+        "required": ["email"],
+        "properties": { "email": { "type": "string" } }
+      },
+      "ResetPasswordDtoRq": {
+        "type": "object",
+        "required": ["token", "code", "newPassword"],
+        "properties": {
+          "token": { "type": "string" },
+          "code": { "type": "string" },
+          "newPassword": { "type": "string" }
+        }
+      },
+      "RoomTypeDtoRs": {
+        "type": "object",
+        "required": ["code", "name"],
+        "properties": {
+          "code": { "type": "string" },
+          "name": { "type": "string" }
+        }
+      },
+      "StylePresetDtoRs": {
+        "type": "object",
+        "required": ["code", "name", "description"],
+        "properties": {
+          "code": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      },
+      "CatalogDtoRs": {
+        "type": "object",
+        "required": ["roomTypes", "stylePresets"],
+        "properties": {
+          "roomTypes": { "type": "array", "items": { "$ref": "#/components/schemas/RoomTypeDtoRs" } },
+          "stylePresets": { "type": "array", "items": { "$ref": "#/components/schemas/StylePresetDtoRs" } }
+        }
+      },
+      "TokenBalanceDtoRs": {
+        "type": "object",
+        "required": ["balance", "generationCost", "purchaseUrl"],
+        "properties": {
+          "balance": { "type": "integer" },
+          "generationCost": { "type": "integer" },
+          "purchaseUrl": { "type": "string" }
+        }
+      },
+      "TokenPackageDtoRs": {
+        "type": "object",
+        "required": ["code", "tokens", "price"],
+        "properties": {
+          "code": { "type": "string" },
+          "tokens": { "type": "integer" },
+          "price": { "type": "number" }
+        }
+      },
+      "TokenPurchaseDtoRq": {
+        "type": "object",
+        "required": ["packageCode"],
+        "properties": {
+          "packageCode": { "type": "string" },
+          "email": { "type": "string", "nullable": true },
+          "returnUrl": { "type": "string", "nullable": true }
+        }
+      },
+      "TokenPurchaseDtoRs": {
+        "type": "object",
+        "required": ["confirmationUrl"],
+        "properties": { "confirmationUrl": { "type": "string" } }
+      },
+      "DimensionsDto": {
+        "type": "object",
+        "properties": {
+          "lengthCm": { "type": "integer", "nullable": true },
+          "widthCm": { "type": "integer", "nullable": true },
+          "heightCm": { "type": "integer", "nullable": true }
+        }
+      },
+      "BriefDtoRq": {
+        "type": "object",
+        "required": ["roomTypeCode"],
+        "properties": {
+          "roomTypeCode": { "type": "string" },
+          "stylePresetCode": { "type": "string", "nullable": true },
+          "text": { "type": "string", "nullable": true },
+          "dimensions": { "$ref": "#/components/schemas/DimensionsDto" }
+        }
+      },
+      "BriefDtoRs": {
+        "type": "object",
+        "required": ["roomTypeCode"],
+        "properties": {
+          "roomTypeCode": { "type": "string" },
+          "roomTypeName": { "type": "string", "nullable": true },
+          "stylePresetCode": { "type": "string", "nullable": true },
+          "stylePresetName": { "type": "string", "nullable": true },
+          "text": { "type": "string", "nullable": true },
+          "dimensions": { "allOf": [{ "$ref": "#/components/schemas/DimensionsDto" }], "nullable": true }
+        }
+      },
+      "SubmitOrderDtoRq": {
+        "type": "object",
+        "required": ["personalDataConsent"],
+        "properties": {
+          "email": { "type": "string", "nullable": true },
+          "personalDataConsent": { "type": "boolean" }
+        }
+      },
+      "CreateOrderDtoRs": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "status": { "$ref": "#/components/schemas/OrderStatus" }
+        }
+      },
+      "PhotoDtoRs": {
+        "type": "object",
+        "required": ["id", "status", "extra"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "status": { "$ref": "#/components/schemas/PhotoStatus" },
+          "extra": { "type": "boolean" },
+          "url": { "type": "string", "nullable": true }
+        }
+      },
+      "UploadInstructionsDtoRs": {
+        "type": "object",
+        "required": ["url", "method", "headers", "expiresAt"],
+        "properties": {
+          "url": { "type": "string" },
+          "method": { "type": "string" },
+          "headers": { "type": "object", "additionalProperties": { "type": "string" } },
+          "expiresAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "PhotoUploadDtoRs": {
+        "type": "object",
+        "required": ["photoId", "upload"],
+        "properties": {
+          "photoId": { "type": "string", "format": "uuid" },
+          "upload": { "$ref": "#/components/schemas/UploadInstructionsDtoRs" }
+        }
+      },
+      "AddPhotoDtoRq": {
+        "type": "object",
+        "required": ["contentType", "sizeBytes"],
+        "properties": {
+          "contentType": { "type": "string" },
+          "sizeBytes": { "type": "integer", "format": "int64" }
+        }
+      },
+      "ResultDtoRs": {
+        "type": "object",
+        "required": ["kind", "position", "url"],
+        "properties": {
+          "kind": { "$ref": "#/components/schemas/ResultKind" },
+          "position": { "type": "integer" },
+          "url": { "type": "string" }
+        }
+      },
+      "ProgressDtoRs": {
+        "type": "object",
+        "required": ["done", "total"],
+        "properties": {
+          "done": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "OrderDtoRs": {
+        "type": "object",
+        "required": ["id", "status", "photos", "maxPhotos", "cabinetMessage", "results", "createdAt"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "status": { "$ref": "#/components/schemas/OrderStatus" },
+          "brief": { "allOf": [{ "$ref": "#/components/schemas/BriefDtoRs" }], "nullable": true },
+          "photos": { "type": "array", "items": { "$ref": "#/components/schemas/PhotoDtoRs" } },
+          "maxPhotos": { "type": "integer" },
+          "tariff": { "allOf": [{ "$ref": "#/components/schemas/Tariff" }], "nullable": true },
+          "price": { "type": "number", "nullable": true },
+          "email": { "type": "string", "nullable": true },
+          "cabinetMessage": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/ResultDtoRs" } },
+          "progress": { "allOf": [{ "$ref": "#/components/schemas/ProgressDtoRs" }], "nullable": true },
+          "createdAt": { "type": "string" },
+          "paidAt": { "type": "string", "nullable": true },
+          "deliveredAt": { "type": "string", "nullable": true },
+          "extraPhotosDeadline": { "type": "string", "nullable": true }
+        }
+      },
+      "OrderHistoryItemDtoRs": {
+        "type": "object",
+        "required": ["id", "status", "message", "createdAt"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "status": { "$ref": "#/components/schemas/OrderStatus" },
+          "email": { "type": "string", "nullable": true },
+          "message": { "type": "string" },
+          "tariff": { "allOf": [{ "$ref": "#/components/schemas/Tariff" }], "nullable": true },
+          "price": { "type": "number", "nullable": true },
+          "createdAt": { "type": "string" }
+        }
+      },
+      "OrderHistoryPageDtoRs": {
+        "type": "object",
+        "required": ["items", "page", "size", "totalElements", "totalPages"],
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/OrderHistoryItemDtoRs" } },
+          "page": { "type": "integer" },
+          "size": { "type": "integer" },
+          "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

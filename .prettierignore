@@ -1,0 +1,8 @@
+.next
+node_modules
+src/shared/api/generated
+pnpm-lock.yaml
+coverage
+playwright-report
+test-results
+openapi.json
