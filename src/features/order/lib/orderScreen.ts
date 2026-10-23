@@ -1,14 +1,10 @@
-import { OrderStatus, type OrderStatus as OrderStatusValue } from "@/shared/api/generated/model";
+import { OrderMode, OrderStatus, type OrderStatus as OrderStatusValue } from "@/shared/api/generated/model";
 import { assertNever } from "@/shared/lib/assertNever";
 
-export const WIZARD_STEPS = ["brief", "photos", "submit"] as const;
+export const REDESIGN_STEPS = ["brief", "photos", "submit"] as const;
+export const EDIT_STEPS = ["edit", "submit"] as const;
+export const WIZARD_STEPS = ["brief", "photos", "edit", "submit"] as const;
 export type WizardStep = (typeof WIZARD_STEPS)[number];
-
-const STEP_BY_STATUS: Partial<Record<OrderStatusValue, WizardStep>> = {
-  [OrderStatus.DRAFT]: "brief",
-  [OrderStatus.AWAITING_PHOTOS]: "photos",
-  [OrderStatus.AWAITING_PAYMENT]: "submit",
-};
 
 export type OrderView =
   | { type: "wizard"; step: WizardStep }
@@ -17,12 +13,15 @@ export type OrderView =
   | { type: "delivered" }
   | { type: "failed" };
 
-export function viewForStatus(status: OrderStatusValue): OrderView {
+export function viewForStatus(
+  status: OrderStatusValue,
+  mode: typeof OrderMode.REDESIGN | typeof OrderMode.EDIT = OrderMode.REDESIGN,
+): OrderView {
   switch (status) {
     case OrderStatus.DRAFT:
-      return { type: "wizard", step: "brief" };
+      return { type: "wizard", step: mode === OrderMode.EDIT ? "edit" : "brief" };
     case OrderStatus.AWAITING_PHOTOS:
-      return { type: "wizard", step: "photos" };
+      return { type: "wizard", step: mode === OrderMode.EDIT ? "edit" : "photos" };
     case OrderStatus.AWAITING_PAYMENT:
       return { type: "wizard", step: "submit" };
     case OrderStatus.PAID:
@@ -39,20 +38,41 @@ export function viewForStatus(status: OrderStatusValue): OrderView {
   }
 }
 
-export function resolveWizardStep(status: OrderStatusValue, requested: string | undefined): WizardStep | null {
-  const max = STEP_BY_STATUS[status];
+export function resolveWizardStep(
+  status: OrderStatusValue,
+  requested: string | undefined,
+  mode: typeof OrderMode.REDESIGN | typeof OrderMode.EDIT = OrderMode.REDESIGN,
+): WizardStep | null {
+  const sequence: readonly WizardStep[] = mode === OrderMode.EDIT ? EDIT_STEPS : REDESIGN_STEPS;
+  const max = maxStep(status, mode);
   if (!max) return null;
-  if (!requested || !isWizardStep(requested)) return max;
-  if (WIZARD_STEPS.indexOf(requested) > WIZARD_STEPS.indexOf(max)) return max;
+  if (!requested || !isStep(requested, sequence)) return max;
+  if (sequence.indexOf(requested) > sequence.indexOf(max)) return max;
   return requested;
 }
 
-function isWizardStep(value: string): value is WizardStep {
-  return WIZARD_STEPS.some((step) => step === value);
+function maxStep(
+  status: OrderStatusValue,
+  mode: typeof OrderMode.REDESIGN | typeof OrderMode.EDIT,
+): WizardStep | undefined {
+  if (mode === OrderMode.EDIT) {
+    if (status === OrderStatus.DRAFT || status === OrderStatus.AWAITING_PHOTOS) return "edit";
+    if (status === OrderStatus.AWAITING_PAYMENT) return "submit";
+    return undefined;
+  }
+  if (status === OrderStatus.DRAFT) return "brief";
+  if (status === OrderStatus.AWAITING_PHOTOS) return "photos";
+  if (status === OrderStatus.AWAITING_PAYMENT) return "submit";
+  return undefined;
 }
 
-export function wizardIndex(step: WizardStep): number {
-  return WIZARD_STEPS.indexOf(step);
+function isStep<T extends readonly string[]>(value: string, steps: T): value is T[number] {
+  return steps.some((step) => step === value);
+}
+
+export function wizardIndex(step: WizardStep, mode: typeof OrderMode.REDESIGN | typeof OrderMode.EDIT): number {
+  const sequence: readonly WizardStep[] = mode === OrderMode.EDIT ? EDIT_STEPS : REDESIGN_STEPS;
+  return sequence.indexOf(step);
 }
 
 export function statusBadge(status: OrderStatusValue): {

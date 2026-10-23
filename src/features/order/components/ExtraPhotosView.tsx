@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 
 import type { OrderDtoRs } from "@/shared/api/generated/model";
-import { PhotoStatus } from "@/shared/api/generated/model";
+import { PhotoRole, PhotoStatus } from "@/shared/api/generated/model";
 import { getGetOrderQueryKey, useSubmitExtraPhotos } from "@/shared/api/generated/orders/orders";
 import { useAddPhoto, useCompletePhoto } from "@/shared/api/generated/photos/photos";
 import { isApiError } from "@/shared/api/errors";
@@ -39,7 +39,7 @@ export function ExtraPhotosView({ order }: ExtraPhotosViewProps) {
     const prepared = await preparePhoto(file);
     const started = await addPhoto.mutateAsync({
       id: order.id,
-      data: { contentType: prepared.contentType, sizeBytes: prepared.blob.size },
+      data: { contentType: prepared.contentType, sizeBytes: prepared.blob.size, role: PhotoRole.SOURCE },
     });
     await putPhoto(started.data.upload.url, started.data.upload.headers, prepared.blob, () => undefined);
     const completed = await completePhoto.mutateAsync({ id: order.id, photoId: started.data.photoId });

@@ -26,7 +26,9 @@ import type {
 
 import type {
   BriefDtoRq,
+  CreateOrderDtoRq,
   CreateOrderDtoRs,
+  EditRequestDtoRq,
   OrderDtoRs,
   SubmitOrderDtoRq
 } from '../model';
@@ -73,14 +75,28 @@ export const getCreateOrderUrl = () => {
   return `/api/v1/orders`
 }
 
-export const createOrder = async ( options?: Parameters<typeof fetcher>[1]): Promise<createOrderResponse> => {
+export const createOrder = async (createOrderDtoRq?: CreateOrderDtoRq, options?: Parameters<typeof fetcher>[1]): Promise<createOrderResponse> => {
 
-  return fetcher<createOrderResponse>(getCreateOrderUrl(),
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return fetcher<createOrderResponse>(getCreateOrderUrl(),
   {
     ...options,
-    method: 'POST'
-
-
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createOrderDtoRq)
   }
 );}
 
@@ -91,8 +107,8 @@ export const createOrder = async ( options?: Parameters<typeof fetcher>[1]): Pro
 export const getCreateOrderMutationKey = () => ['createOrder'] as const;
 
 export const getCreateOrderMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createOrder>>, TError,void, TContext>, request?: SecondParameter<typeof fetcher>}
-): UseMutationOptions<Awaited<ReturnType<typeof createOrder>>, TError,void, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createOrder>>, TError,CreateOrderMutationVariables, TContext>, request?: SecondParameter<typeof fetcher>}
+): UseMutationOptions<Awaited<ReturnType<typeof createOrder>>, TError,CreateOrderMutationVariables, TContext> => {
 
 const mutationKey = getCreateOrderMutationKey();
 const {mutation: mutationOptions, request: requestOptions} = options ?
@@ -104,10 +120,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createOrder>>, void> = () => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createOrder>>, CreateOrderMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-
-          return  createOrder(requestOptions)
+          return  createOrder(data,requestOptions)
         }
 
 
@@ -118,16 +134,16 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
   return  { mutationFn, ...mutationOptions }}
 
     export type CreateOrderMutationResult = NonNullable<Awaited<ReturnType<typeof createOrder>>>
-
+    export type CreateOrderMutationBody = CreateOrderDtoRq | undefined
     export type CreateOrderMutationError = unknown
-
+    export type CreateOrderMutationVariables = {data?: CreateOrderDtoRq}
 
     export const useCreateOrder = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createOrder>>, TError,void, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createOrder>>, TError,CreateOrderMutationVariables, TContext>, request?: SecondParameter<typeof fetcher>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createOrder>>,
         TError,
-        void,
+        CreateOrderMutationVariables,
         TContext
       > => {
       return useMutation(getCreateOrderMutationOptions(options), queryClient);
@@ -331,6 +347,100 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
         TContext
       > => {
       return useMutation(getUpdateBriefMutationOptions(options), queryClient);
+    }
+    export type updateEditRequestResponse200 = {
+  data: OrderDtoRs
+  status: 200
+}
+
+export type updateEditRequestResponseSuccess = (updateEditRequestResponse200) & {
+  headers: Headers;
+};
+;
+
+export type updateEditRequestResponse = (updateEditRequestResponseSuccess)
+
+export const getUpdateEditRequestUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/orders/${id}/edit-request`
+}
+
+export const updateEditRequest = async (id: string,
+    editRequestDtoRq: EditRequestDtoRq, options?: Parameters<typeof fetcher>[1]): Promise<updateEditRequestResponse> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return fetcher<updateEditRequestResponse>(getUpdateEditRequestUrl(id),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(editRequestDtoRq)
+  }
+);}
+
+
+
+
+
+export const getUpdateEditRequestMutationKey = () => ['updateEditRequest'] as const;
+
+export const getUpdateEditRequestMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateEditRequest>>, TError,UpdateEditRequestMutationVariables, TContext>, request?: SecondParameter<typeof fetcher>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateEditRequest>>, TError,UpdateEditRequestMutationVariables, TContext> => {
+
+const mutationKey = getUpdateEditRequestMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateEditRequest>>, UpdateEditRequestMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateEditRequest(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateEditRequestMutationResult = NonNullable<Awaited<ReturnType<typeof updateEditRequest>>>
+    export type UpdateEditRequestMutationBody = EditRequestDtoRq
+    export type UpdateEditRequestMutationError = unknown
+    export type UpdateEditRequestMutationVariables = {id: string;data: EditRequestDtoRq}
+
+    export const useUpdateEditRequest = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateEditRequest>>, TError,UpdateEditRequestMutationVariables, TContext>, request?: SecondParameter<typeof fetcher>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateEditRequest>>,
+        TError,
+        UpdateEditRequestMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateEditRequestMutationOptions(options), queryClient);
     }
     export type submitOrderResponse200 = {
   data: OrderDtoRs

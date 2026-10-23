@@ -6,7 +6,7 @@ import { OrderStatus, type OrderDtoRs } from "@/shared/api/generated/model";
 import { useGetOrder } from "@/shared/api/generated/orders/orders";
 import { useGetTokenBalance } from "@/shared/api/generated/tokens/tokens";
 import { Notice } from "@/shared/ui/Notice";
-import { BriefStep, PhotosStep, SubmitStep } from "@/features/wizard";
+import { BriefStep, EditStep, PhotosStep, SubmitStep } from "@/features/wizard";
 
 import { resolveWizardStep, viewForStatus } from "../lib/orderScreen";
 import { DeliveredView } from "./DeliveredView";
@@ -77,11 +77,12 @@ export function OrderScreen({ orderId, requestedStep, returned = false }: OrderS
 }
 
 function OrderBody({ order, requestedStep }: { order: OrderDtoRs; requestedStep?: string }) {
-  const view = viewForStatus(order.status);
+  const view = viewForStatus(order.status, order.mode);
   if (view.type === "wizard") {
-    const step = resolveWizardStep(order.status, requestedStep) ?? view.step;
+    const step = resolveWizardStep(order.status, requestedStep, order.mode) ?? view.step;
     if (step === "brief") return <BriefStep order={order} />;
     if (step === "photos") return <PhotosStep order={order} />;
+    if (step === "edit") return <EditStep order={order} />;
     return <SubmitStep order={order} />;
   }
   if (view.type === "progress") return <GeneratingView order={order} />;

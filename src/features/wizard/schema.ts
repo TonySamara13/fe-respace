@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { EditArea } from "@/shared/api/generated/model";
+
 const cm = (min: number, max: number, minMessage: string, maxMessage: string) =>
   z
     .string()
@@ -51,3 +53,27 @@ export const submitSchema = z.object({
 });
 
 export type SubmitValues = z.infer<typeof submitSchema>;
+
+const EDIT_AREAS = [
+  EditArea.FLOOR,
+  EditArea.WALLS,
+  EditArea.FURNITURE,
+  EditArea.LIGHTING,
+  EditArea.WINDOWS,
+  EditArea.DECOR,
+  EditArea.OTHER,
+] as const;
+
+export const editRequestSchema = z.object({
+  area: z.enum(EDIT_AREAS, {
+    required_error: "Выберите, что меняем",
+    invalid_type_error: "Выберите, что меняем",
+  }),
+  instruction: z
+    .string()
+    .trim()
+    .min(1, "Опишите правку")
+    .max(500, "Описание правки не длиннее 500 символов"),
+});
+
+export type EditRequestValues = z.infer<typeof editRequestSchema>;

@@ -1,4 +1,4 @@
-import { OrderStatus } from "@/shared/api/generated/model";
+import { OrderMode, OrderStatus } from "@/shared/api/generated/model";
 
 import { describe, expect, it } from "vitest";
 
@@ -30,5 +30,16 @@ describe("статус заказа", () => {
     expect(resolveWizardStep(OrderStatus.AWAITING_PAYMENT, "brief")).toBe("brief");
     expect(resolveWizardStep(OrderStatus.AWAITING_PHOTOS, "photos")).toBe("photos");
     expect(resolveWizardStep(OrderStatus.GENERATING, "brief")).toBeNull();
+  });
+
+  it("для точечной правки черновик и фото открывают шаг правки", () => {
+    expect(viewForStatus(OrderStatus.DRAFT, OrderMode.EDIT)).toEqual({ type: "wizard", step: "edit" });
+    expect(viewForStatus(OrderStatus.AWAITING_PHOTOS, OrderMode.EDIT)).toEqual({ type: "wizard", step: "edit" });
+    expect(viewForStatus(OrderStatus.AWAITING_PAYMENT, OrderMode.EDIT)).toEqual({ type: "wizard", step: "submit" });
+  });
+
+  it("для точечной правки нельзя открыть отправку до заполнения запроса", () => {
+    expect(resolveWizardStep(OrderStatus.DRAFT, "submit", OrderMode.EDIT)).toBe("edit");
+    expect(resolveWizardStep(OrderStatus.AWAITING_PAYMENT, "edit", OrderMode.EDIT)).toBe("edit");
   });
 });

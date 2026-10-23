@@ -5,8 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
-import type { OrderDtoRs } from "@/shared/api/generated/model";
-import { PhotoStatus } from "@/shared/api/generated/model";
+import { PhotoRole, PhotoStatus, type OrderDtoRs } from "@/shared/api/generated/model";
 import { getGetOrderQueryKey } from "@/shared/api/generated/orders/orders";
 import { useAddPhoto, useCompletePhoto, useDeletePhoto } from "@/shared/api/generated/photos/photos";
 import { isApiError } from "@/shared/api/errors";
@@ -39,7 +38,9 @@ export function PhotosStep({ order }: PhotosStepProps) {
   const deletePhoto = useDeletePhoto();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const uploaded = order.photos.filter((photo) => photo.status === PhotoStatus.UPLOADED);
+  const uploaded = order.photos.filter(
+    (photo) => photo.status === PhotoStatus.UPLOADED && photo.role === PhotoRole.SOURCE,
+  );
 
   function remember(result: { data: OrderDtoRs }) {
     queryClient.setQueryData(getGetOrderQueryKey(order.id), result);
@@ -52,7 +53,7 @@ export function PhotosStep({ order }: PhotosStepProps) {
       const prepared = await preparePhoto(file);
       const started = await addPhoto.mutateAsync({
         id: order.id,
-        data: { contentType: prepared.contentType, sizeBytes: prepared.blob.size },
+        data: { contentType: prepared.contentType, sizeBytes: prepared.blob.size, role: PhotoRole.SOURCE },
       });
       await putPhoto(started.data.upload.url, started.data.upload.headers, prepared.blob, (progress) => {
         setLocal((items) => items.map((item) => (item.key === key ? { ...item, progress } : item)));

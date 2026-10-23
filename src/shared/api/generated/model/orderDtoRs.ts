@@ -6,6 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BriefDtoRs } from './briefDtoRs';
+import type { EditRequestDtoRs } from './editRequestDtoRs';
+import type { OrderMode } from './orderMode';
 import type { OrderStatus } from './orderStatus';
 import type { PhotoDtoRs } from './photoDtoRs';
 import type { ProgressDtoRs } from './progressDtoRs';
@@ -15,7 +17,9 @@ import type { Tariff } from './tariff';
 export interface OrderDtoRs {
   id: string;
   status: OrderStatus;
+  mode: OrderMode;
   brief?: BriefDtoRs | null;
+  editRequest?: EditRequestDtoRs | null;
   photos: PhotoDtoRs[];
   maxPhotos: number;
   tariff?: Tariff | null;

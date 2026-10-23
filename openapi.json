@@ -156,6 +156,10 @@
       "post": {
         "operationId": "createOrder",
         "tags": ["orders"],
+        "requestBody": {
+          "required": false,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateOrderDtoRq" } } }
+        },
         "responses": {
           "201": {
             "description": "Черновик",
@@ -189,6 +193,23 @@
         "responses": {
           "200": {
             "description": "Бриф сохранён",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}/edit-request": {
+      "put": {
+        "operationId": "updateEditRequest",
+        "tags": ["orders"],
+        "parameters": [{ "$ref": "#/components/parameters/OrderId" }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EditRequestDtoRq" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Запрос правки сохранён",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDtoRs" } } }
           }
         }
@@ -343,7 +364,13 @@
         ]
       },
       "PhotoStatus": { "type": "string", "enum": ["PENDING_UPLOAD", "UPLOADED"] },
-      "ResultKind": { "type": "string", "enum": ["IMAGE", "PANORAMA"] },
+      "PhotoRole": { "type": "string", "enum": ["SOURCE", "MASK", "REFERENCE"] },
+      "ResultKind": { "type": "string", "enum": ["IMAGE", "PANORAMA", "ORIGINAL"] },
+      "OrderMode": { "type": "string", "enum": ["REDESIGN", "EDIT"] },
+      "EditArea": {
+        "type": "string",
+        "enum": ["FLOOR", "WALLS", "FURNITURE", "LIGHTING", "WINDOWS", "DECOR", "OTHER"]
+      },
       "Tariff": { "type": "string", "enum": ["BASIC", "PANORAMA"] },
       "RegisterDtoRq": {
         "type": "object",
@@ -493,6 +520,29 @@
           "personalDataConsent": { "type": "boolean" }
         }
       },
+      "EditRequestDtoRq": {
+        "type": "object",
+        "required": ["area", "instruction"],
+        "properties": {
+          "area": { "$ref": "#/components/schemas/EditArea" },
+          "instruction": { "type": "string", "maxLength": 500 }
+        }
+      },
+      "EditRequestDtoRs": {
+        "type": "object",
+        "required": ["area", "instruction"],
+        "properties": {
+          "area": { "$ref": "#/components/schemas/EditArea" },
+          "instruction": { "type": "string" }
+        }
+      },
+      "CreateOrderDtoRq": {
+        "type": "object",
+        "properties": {
+          "mode": { "allOf": [{ "$ref": "#/components/schemas/OrderMode" }], "nullable": true },
+          "sourceResultId": { "type": "string", "format": "uuid", "nullable": true }
+        }
+      },
       "CreateOrderDtoRs": {
         "type": "object",
         "required": ["id", "status"],
@@ -503,11 +553,12 @@
       },
       "PhotoDtoRs": {
         "type": "object",
-        "required": ["id", "status", "extra"],
+        "required": ["id", "status", "extra", "role"],
         "properties": {
           "id": { "type": "string", "format": "uuid" },
           "status": { "$ref": "#/components/schemas/PhotoStatus" },
           "extra": { "type": "boolean" },
+          "role": { "$ref": "#/components/schemas/PhotoRole" },
           "url": { "type": "string", "nullable": true }
         }
       },
@@ -534,13 +585,15 @@
         "required": ["contentType", "sizeBytes"],
         "properties": {
           "contentType": { "type": "string" },
-          "sizeBytes": { "type": "integer", "format": "int64" }
+          "sizeBytes": { "type": "integer", "format": "int64" },
+          "role": { "allOf": [{ "$ref": "#/components/schemas/PhotoRole" }], "nullable": true }
         }
       },
       "ResultDtoRs": {
         "type": "object",
-        "required": ["kind", "position", "url"],
+        "required": ["id", "kind", "position", "url"],
         "properties": {
+          "id": { "type": "string", "format": "uuid" },
           "kind": { "$ref": "#/components/schemas/ResultKind" },
           "position": { "type": "integer" },
           "url": { "type": "string" }
@@ -556,11 +609,13 @@
       },
       "OrderDtoRs": {
         "type": "object",
-        "required": ["id", "status", "photos", "maxPhotos", "cabinetMessage", "results", "createdAt"],
+        "required": ["id", "status", "mode", "photos", "maxPhotos", "cabinetMessage", "results", "createdAt"],
         "properties": {
           "id": { "type": "string", "format": "uuid" },
           "status": { "$ref": "#/components/schemas/OrderStatus" },
+          "mode": { "$ref": "#/components/schemas/OrderMode" },
           "brief": { "allOf": [{ "$ref": "#/components/schemas/BriefDtoRs" }], "nullable": true },
+          "editRequest": { "allOf": [{ "$ref": "#/components/schemas/EditRequestDtoRs" }], "nullable": true },
           "photos": { "type": "array", "items": { "$ref": "#/components/schemas/PhotoDtoRs" } },
           "maxPhotos": { "type": "integer" },
           "tariff": { "allOf": [{ "$ref": "#/components/schemas/Tariff" }], "nullable": true },
@@ -577,10 +632,11 @@
       },
       "OrderHistoryItemDtoRs": {
         "type": "object",
-        "required": ["id", "status", "message", "createdAt"],
+        "required": ["id", "status", "mode", "message", "createdAt"],
         "properties": {
           "id": { "type": "string", "format": "uuid" },
           "status": { "$ref": "#/components/schemas/OrderStatus" },
+          "mode": { "$ref": "#/components/schemas/OrderMode" },
           "email": { "type": "string", "nullable": true },
           "message": { "type": "string" },
           "tariff": { "allOf": [{ "$ref": "#/components/schemas/Tariff" }], "nullable": true },

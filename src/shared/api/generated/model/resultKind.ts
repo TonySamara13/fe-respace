@@ -12,4 +12,5 @@ export type ResultKind = typeof ResultKind[keyof typeof ResultKind];
 export const ResultKind = {
   IMAGE: 'IMAGE',
   PANORAMA: 'PANORAMA',
+  ORIGINAL: 'ORIGINAL',
 } as const;

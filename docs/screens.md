@@ -15,8 +15,8 @@
 | `/auth/forgot-password` | гость | Запрос сброса (форма email, стиль 05) | `desktop/05` | `POST /auth/forgot-password` |
 | `/auth/reset-password?token=` | все | Код + новый пароль | `desktop/05` | `POST /auth/reset-password` |
 | `/cabinet/orders` | вход | История заказов | `desktop/13`, `mobile/13` | `GET /user/orders` |
-| `/cabinet/orders/new` | вход + email | Создаёт черновик и редиректит на `/cabinet/orders/{id}` | — | `POST /orders` |
-| `/cabinet/orders/[id]` | вход | Wizard или состояние заказа — по `status` | `06–12` | `GET /orders/{id}` |
+| `/cabinet/orders/new` | вход + email | Выбор сценария. Новая правка готового варианта — кнопка на результате, не GET | `desktop/17` | `POST /orders` |
+| `/cabinet/orders/[id]` | вход | Wizard или состояние заказа — по `status` и `mode` | `06–12`, `18–19` | `GET /orders/{id}` |
 | `/cabinet/tokens?orderId=` | вход | Покупка токенов | `desktop/16`, `mobile/16` | `GET /tokens/packages`, `/tokens/balance`, `POST /tokens/purchases` |
 | `/legal/offer`, `/legal/privacy`, `/legal/requisites` | все | Юридические | `desktop/15` | — |
 
@@ -27,15 +27,15 @@
 
 | `status` | UI | Макет | Polling |
 |----------|----|-------|---------|
-| `DRAFT` | Wizard, шаг «Бриф» | 06 | — |
-| `AWAITING_PHOTOS` | Wizard, шаг «Фото» | 07 | — |
+| `DRAFT` | REDESIGN: шаг «Бриф». EDIT: шаг «Фото и правка» | 06 / 18 | — |
+| `AWAITING_PHOTOS` | REDESIGN: шаг «Фото». EDIT: тот же шаг правки | 07 / 18 | — |
 | `AWAITING_PAYMENT` | Wizard, шаг «Генерация» (отправка) | 08 | — |
 | `PAID`, `GENERATING` | Прогресс: `cabinetMessage`, `progress.done / total` | 09 | 4 с |
 | `AWAITING_EXTRA_PHOTOS` | Догрузка фото + дедлайн `extraPhotosDeadline` + «Запустить генерацию» | 10 | 15 с |
-| `DELIVERED` | Галерея `results[]`, скачивание, блок «Ещё одна комната?» с балансом | 11 | — |
+| `DELIVERED` | REDESIGN: галерея. EDIT: сравнение до/после, варианты, «Ещё правка этого фото» | 11 / 19 | — |
 | `FAILED` | Ошибка, `cabinetMessage`, «Токены за комнату вернули на баланс», CTA «Новая комната» | 12 | — |
 
-Пока статус редактируемый (`DRAFT…AWAITING_PAYMENT`), шаги wizard переключаются через `?step=brief|photos|submit`; по умолчанию — шаг из таблицы. Нельзя открыть шаг дальше текущего статуса (например, `submit` при `DRAFT`). Маппинг статус → экран — одна чистая функция в `features/order/lib`, покрыта тестом.
+Пока статус редактируемый (`DRAFT…AWAITING_PAYMENT`), шаги wizard переключаются через `?step=brief|photos|submit` (REDESIGN) или `?step=edit|submit` (EDIT); по умолчанию — шаг из таблицы. Нельзя открыть шаг дальше текущего статуса (например, `submit` при `DRAFT`). Маппинг статус → экран — одна чистая функция в `features/order/lib`, покрыта тестом.
 
 `AWAITING_PAYMENT` и `PAID` — исторические имена: в UI это «Готов к отправке» и «В очереди». Слово «оплата» в контексте заказа не использовать.
 
@@ -43,7 +43,8 @@
 
 - **Бриф:** тип комнаты (Chip, из `GET /catalog`), стиль (StyleCard) и/или текст; размеры — опционально. Ошибка `brief_empty` — «Выберите стиль или опишите желаемый интерьер». Сохранение — `PUT /orders/{id}/brief` по кнопке «Далее».
 - **Фото:** 1–`maxPhotos` фото, Dropzone + превью, подсказки «Как снимать». Кнопка «Далее» активна при ≥ 1 загруженном фото.
-- **Генерация (отправка):** карточка комнаты (бриф + превью), `BalanceRows` «На балансе / Стоимость комнаты / Останется», чекбокс согласия на обработку ПДн, кнопка **«Отправить на генерацию · 30 токенов»** (число — `generationCost` из `/tokens/balance`). При балансе < стоимости кнопка остаётся активной, а `TokenChip` — в low-состоянии; переход на покупку — по ответу `insufficient_tokens`.
+- **Генерация (отправка):** карточка комнаты (бриф или запрос правки + превью), `BalanceRows` «На балансе / Стоимость комнаты / Останется», чекбокс согласия на обработку ПДн, кнопка **«Отправить на генерацию · 30 токенов»** (число — `generationCost` из `/tokens/balance`). При балансе < стоимости кнопка остаётся активной, а `TokenChip` — в low-состоянии; переход на покупку — по ответу `insufficient_tokens`.
+- **Точечная правка:** выбор режима на `/cabinet/orders/new`; шаг «Фото и правка» — одно фото, кисть/ластик (маска PNG), чипы «что меняем», описание до 500 символов, опциональный пример; `PUT /orders/{id}/edit-request`. Результат — ползунок до/после (`kind = ORIGINAL` и выбранный IMAGE), «Ещё правка этого фото» → `POST /orders { mode: EDIT, sourceResultId }`.
 
 ## Покупка токенов
 

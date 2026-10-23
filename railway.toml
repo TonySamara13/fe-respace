@@ -1,0 +1,9 @@
+# Repo: TonySamara13/fe-respace — Root Directory в Railway = / (корень репо).
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"

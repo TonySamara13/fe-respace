@@ -2,16 +2,17 @@ import { Check } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 
-const STEPS = ["Бриф", "Фото", "Генерация"] as const;
+const REDESIGN_STEPS = ["Бриф", "Фото", "Генерация"] as const;
 
 type WizardProgressProps = {
   activeIndex: number;
+  steps?: readonly string[];
 };
 
-export function WizardProgress({ activeIndex }: WizardProgressProps) {
+export function WizardProgress({ activeIndex, steps = REDESIGN_STEPS }: WizardProgressProps) {
   return (
     <p className="mb-6 text-small text-ink-tertiary">
-      {STEPS.map((step, index) => {
+      {steps.map((step, index) => {
         const done = index < activeIndex;
         const active = index === activeIndex;
         return (

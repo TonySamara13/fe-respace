@@ -24,10 +24,11 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Interior Studio",
-    template: "%s — Interior Studio",
+    default: "Целла",
+    template: "%s — Целла",
   },
-  description: "Новый интерьер по вашим фото. Одна комната — 30 токенов, 3 photoreal варианта.",
+  description:
+    "Загрузите снимки комнаты, выберите стиль или опишите его своими словами — и получите 3 фотореалистичных варианта именно вашей комнаты.",
 };
 
 export const viewport: Viewport = {

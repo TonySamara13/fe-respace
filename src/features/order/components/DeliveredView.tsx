@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 
-import type { OrderDtoRs } from "@/shared/api/generated/model";
-import { ResultKind } from "@/shared/api/generated/model";
+import { OrderMode, ResultKind, type OrderDtoRs } from "@/shared/api/generated/model";
 import { useGetTokenBalance } from "@/shared/api/generated/tokens/tokens";
 import { routes } from "@/shared/config/routes";
 import { plural, tokensLabel } from "@/shared/lib/plural";
 import { Badge } from "@/shared/ui/Badge";
+
+import { EditDeliveredView } from "./EditDeliveredView";
 
 type DeliveredViewProps = {
   order: OrderDtoRs;
@@ -15,6 +16,7 @@ type DeliveredViewProps = {
 
 export function DeliveredView({ order }: DeliveredViewProps) {
   const balance = useGetTokenBalance();
+  if (order.mode === OrderMode.EDIT) return <EditDeliveredView order={order} />;
   const wallet = balance.data?.data;
   const roomsLeft =
     wallet && wallet.generationCost > 0 ? Math.floor(wallet.balance / wallet.generationCost) : 0;
@@ -29,7 +31,9 @@ export function DeliveredView({ order }: DeliveredViewProps) {
         хранение 90 дней
       </p>
       <div className="mt-8 grid gap-4 md:grid-cols-3">
-        {order.results.map((result) => (
+        {order.results
+          .filter((result) => result.kind !== ResultKind.ORIGINAL)
+          .map((result) => (
           <figure key={`${result.kind}-${result.position}`} className="overflow-hidden rounded-xl bg-muted">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

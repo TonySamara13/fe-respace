@@ -5,12 +5,14 @@
  * Снимок контракта be-respace для генерации клиента. Обновлять: pnpm api:fetch при запущенном backend.
  * OpenAPI spec version: 1.0.0
  */
+import type { OrderMode } from './orderMode';
 import type { OrderStatus } from './orderStatus';
 import type { Tariff } from './tariff';
 
 export interface OrderHistoryItemDtoRs {
   id: string;
   status: OrderStatus;
+  mode: OrderMode;
   /** @nullable */
   email?: string | null;
   message: string;

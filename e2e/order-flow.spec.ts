@@ -2,7 +2,9 @@ import { expect, test } from "@playwright/test";
 
 test("лендинг показывает заголовок и пакеты или ошибку загрузки", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Новый интерьер по вашим фото" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Воплотите интерьер своей мечты вместе с Целлой!" }),
+  ).toBeVisible();
   await expect(page.getByRole("link", { name: "Создать проект" })).toBeVisible();
 });
 

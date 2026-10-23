@@ -1,12 +1,25 @@
 import { ImagePlus } from "lucide-react";
 import type { DragEvent } from "react";
 
+import { cn } from "@/shared/lib/cn";
+
 type DropzoneProps = {
   disabled?: boolean;
+  multiple?: boolean;
+  compact?: boolean;
+  title?: string;
+  hint?: string;
   onFiles: (files: File[]) => void;
 };
 
-export function Dropzone({ disabled = false, onFiles }: DropzoneProps) {
+export function Dropzone({
+  disabled = false,
+  multiple = true,
+  compact = false,
+  title = "Перетащите файлы сюда",
+  hint = "или выберите с устройства",
+  onFiles,
+}: DropzoneProps) {
   function handleDrop(event: DragEvent<HTMLLabelElement>) {
     event.preventDefault();
     if (disabled) return;
@@ -15,20 +28,23 @@ export function Dropzone({ disabled = false, onFiles }: DropzoneProps) {
 
   return (
     <label
-      className="mb-4 flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-line-strong bg-surface px-6 py-12 text-center"
+      className={cn(
+        "mb-4 flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-line-strong bg-surface px-6 text-center",
+        compact ? "py-6" : "py-12",
+      )}
       onDragOver={(event) => event.preventDefault()}
       onDrop={handleDrop}
     >
       <ImagePlus className="mb-3 text-accent" strokeWidth={1.5} size={40} aria-hidden />
-      <span className="font-medium text-ink">Перетащите файлы сюда</span>
-      <span className="mt-2 text-caption text-ink-secondary">или выберите с устройства</span>
+      <span className="font-medium text-ink">{title}</span>
+      <span className="mt-2 text-caption text-ink-secondary">{hint}</span>
       <span className="mt-4 inline-flex min-h-11 items-center rounded-full border border-line-strong px-5 text-small">
         Выбрать файлы
       </span>
       <input
         type="file"
         accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
-        multiple
+        multiple={multiple}
         disabled={disabled}
         className="sr-only"
         onChange={(event) => {

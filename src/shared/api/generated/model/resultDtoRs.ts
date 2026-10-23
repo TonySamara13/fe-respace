@@ -8,6 +8,7 @@
 import type { ResultKind } from './resultKind';
 
 export interface ResultDtoRs {
+  id: string;
   kind: ResultKind;
   position: number;
   url: string;

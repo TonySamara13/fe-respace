@@ -5,8 +5,10 @@
  * Снимок контракта be-respace для генерации клиента. Обновлять: pnpm api:fetch при запущенном backend.
  * OpenAPI spec version: 1.0.0
  */
+import type { PhotoRole } from './photoRole';
 
 export interface AddPhotoDtoRq {
   contentType: string;
   sizeBytes: number;
+  role?: PhotoRole | null;
 }
