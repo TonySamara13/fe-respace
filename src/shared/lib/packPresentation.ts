@@ -1,4 +1,4 @@
-export const DEFAULT_PACK_CODE = "PACK_70";
+export const DEFAULT_PACK_CODE = "PACK_5000";
 
 export type PackRibbon = {
   label: string;
@@ -12,22 +12,22 @@ export type PackPresentation = {
 };
 
 export function packPresentation(code: string, forOrder: boolean): PackPresentation {
-  if (code === "PACK_70") {
+  if (code === "PACK_5000") {
     return {
       ribbon: { label: "Популярный", tone: "accent" },
-      perRoom: "≈ 339 ₽ за комнату",
-      points: ["2 комнаты + 10 токенов", "Выгоднее на 19%"],
+      perRoom: "10 токенов = 1 ₽",
+      points: ["Базовый курс"],
     };
   }
-  if (code === "PACK_100") {
+  if (code === "PACK_11000") {
     return {
       ribbon: { label: "Выгодно", tone: "ink" },
-      perRoom: "315 ₽ за комнату",
-      points: ["3 комнаты + 10 токенов", "Выгоднее на 25%"],
+      perRoom: "Больше токенов за рубль",
+      points: ["11 000 токенов"],
     };
   }
   return {
-    perRoom: "420 ₽ за комнату",
-    points: ["1 комната", forOrder ? "Хватит для текущего заказа" : "Попробовать сервис"],
+    perRoom: "",
+    points: [forOrder ? "Хватит для текущего заказа" : "Стартовый пакет"],
   };
 }

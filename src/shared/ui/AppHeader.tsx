@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import { useGetTokenBalance } from "@/shared/api/generated/tokens/tokens";
 import { routes } from "@/shared/config/routes";
-import { readSessionUser } from "@/shared/lib/sessionUser";
+import type { SessionUser } from "@/shared/config/session";
 
 import { Button } from "./Button";
 import { TokenChip } from "./TokenChip";
@@ -17,9 +17,12 @@ const LANDING_LINKS = [
   { href: "/#packs", label: "Пакеты" },
 ] as const;
 
-export function AppHeader() {
+type AppHeaderProps = {
+  user: SessionUser | null;
+};
+
+export function AppHeader({ user }: AppHeaderProps) {
   const [open, setOpen] = useState(false);
-  const [user] = useState(() => readSessionUser());
   const balance = useGetTokenBalance({
     query: { enabled: Boolean(user) },
   });

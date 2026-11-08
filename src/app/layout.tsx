@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 
+import { readSessionUser } from "@/shared/api/sessionCookie";
 import { AppHeader } from "@/shared/ui/AppHeader";
 import { QueryProvider } from "@/shared/ui/QueryProvider";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
@@ -37,12 +38,14 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const user = await readSessionUser();
+
   return (
     <html lang="ru" className={`${cormorant.variable} ${manrope.variable}`}>
       <body className="flex min-h-full flex-col">
         <QueryProvider>
-          <AppHeader />
+          <AppHeader user={user} />
           <main className="flex-1">{children}</main>
           <SiteFooter />
         </QueryProvider>

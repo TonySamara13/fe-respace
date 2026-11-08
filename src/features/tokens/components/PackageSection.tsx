@@ -15,7 +15,7 @@ export function PackageSection({ packages }: PackageSectionProps) {
           Пакеты токенов
         </h2>
         <p className="text-body-lg text-ink-secondary mx-auto mt-3 max-w-xl text-center">
-          Одна комната — 30 токенов · 3 фотореалистичных варианта
+          10 токенов = 1 ₽ · одна комната — 30 токенов
         </p>
         <div className="max-w-content mx-auto mt-10 grid gap-4 md:grid-cols-3">
           {packages.map((item) => (

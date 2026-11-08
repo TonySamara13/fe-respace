@@ -61,14 +61,18 @@ export function PackCard({
       </div>
       {showDetails ? (
         <>
-          <p className="text-caption text-ink-tertiary mt-1">{presentation.perRoom}</p>
-          <ul className="text-small text-ink-secondary my-5 space-y-2">
-            {presentation.points.map((point) => (
-              <li key={point} className="before:text-accent before:mr-2 before:content-['—']">
-                {point}
-              </li>
-            ))}
-          </ul>
+          {presentation.perRoom ? (
+            <p className="text-caption text-ink-tertiary mt-1">{presentation.perRoom}</p>
+          ) : null}
+          {presentation.points.length > 0 ? (
+            <ul className="text-small text-ink-secondary my-5 space-y-2">
+              {presentation.points.map((point) => (
+                <li key={point} className="before:text-accent before:mr-2 before:content-['—']">
+                  {point}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </>
       ) : null}
       {href ? (

@@ -106,7 +106,7 @@ export function TokenShop({ packages, orderId, returned = false }: TokenShopProp
       ) : null}
       <h1 className="mt-4 font-display text-display-s font-medium lg:text-display-lg">Пакеты токенов</h1>
       <p className="mt-2 mb-6 text-ink-secondary">
-        Одна комната — 30 токенов · 3 photoreal варианта за ~15 минут
+        10 токенов = 1 ₽ · одна комната — 30 токенов, 3 варианта
       </p>
       {returned ? (
         <div className="mb-6">
