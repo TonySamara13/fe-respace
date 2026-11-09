@@ -17,6 +17,11 @@
   --color-warning: #a67c52;
   --color-warning-bg: #fbf4ea;
   --color-warning-border: #e9d7bf;
+  --color-night: #0c0c0b;
+  --color-night-raised: #161513;
+  --color-cream: #f6f1e8;
+  --color-cream-dim: #cfc6b8;
+  --color-night-line: #34322c;
 
   --font-display: var(--font-cormorant), Georgia, serif;
   --font-sans: var(--font-manrope), system-ui, sans-serif;
@@ -29,6 +34,10 @@
   --text-display-m--line-height: 1.15;
   --text-display-s: 28px;
   --text-display-s--line-height: 1.2;
+  --text-display-hero: 40px;
+  --text-display-hero--line-height: 0.95;
+  --text-display-cinema: 72px;
+  --text-display-cinema--line-height: 0.92;
   --text-heading: 32px;
   --text-heading--line-height: 1.15;
   --text-title: 24px;

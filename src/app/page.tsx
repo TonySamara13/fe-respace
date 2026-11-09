@@ -5,7 +5,7 @@ import type { TokenPackageDtoRs } from "@/shared/api/generated/model";
 export const metadata = {
   title: "Воплотите интерьер своей мечты",
   description:
-    "Загрузите снимки комнаты, выберите стиль или опишите его своими словами — и получите 3 фотореалистичных варианта именно вашей комнаты.",
+    "Загрузите снимки своей комнаты и скажите, что изменить: свет, мебель, пол или стены. Планировка останется вашей.",
 };
 
 async function loadPackages(): Promise<TokenPackageDtoRs[] | null> {

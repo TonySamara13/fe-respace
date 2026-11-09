@@ -52,6 +52,7 @@ export function PackCard({
           {presentation.ribbon.label}
         </span>
       ) : null}
+      <p className="text-small mb-2 font-semibold">{presentation.title}</p>
       <div className="flex items-end justify-between gap-4 md:block">
         <p className="font-display text-display-xl text-ink leading-none font-semibold lining-nums">
           {tokens}

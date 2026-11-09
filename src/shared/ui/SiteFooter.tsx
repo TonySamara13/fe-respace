@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { legalEntity } from "@/shared/config/legalEntity";
 import { routes } from "@/shared/config/routes";
 
 export function SiteFooter() {
+  if (usePathname() === routes.home) return null;
+
   return (
     <footer className="mx-auto w-full max-w-content px-5 py-8 text-caption text-ink-tertiary lg:px-8">
       <p className="mb-3">
