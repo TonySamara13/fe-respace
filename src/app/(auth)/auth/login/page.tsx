@@ -14,7 +14,11 @@ export default async function LoginPage({
       title="Вход"
       lead="Нужен аккаунт для создания заказа"
       showPolaroids
-      trust={["3 варианта", "до 15 минут", "хранение 90 дней"]}
+      trust={[
+        "Несколько вариантов вашего дизайна",
+        "Референсы в один клик",
+        "Результат в вашем кабинете!",
+      ]}
     >
       <LoginForm nextPath={safeNextPath(next)} />
     </AuthShell>

@@ -27,10 +27,7 @@ export function DeliveredView({ order }: DeliveredViewProps) {
     <section className="mx-auto max-w-content px-4 pb-16 lg:px-8">
       <Badge tone="green">Готово</Badge>
       <h1 className="mt-4 font-display text-display-s font-medium lg:text-heading">Ваш новый интерьер</h1>
-      <p className="mt-2 text-caption text-ink-secondary">
-        {title ? `${title} · ` : null}
-        хранение 90 дней
-      </p>
+      {title ? <p className="mt-2 text-caption text-ink-secondary">{title}</p> : null}
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         {order.results
           .filter((result) => result.kind !== ResultKind.ORIGINAL)

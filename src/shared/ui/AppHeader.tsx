@@ -59,16 +59,24 @@ export function AppHeader({ user }: AppHeaderProps) {
               <Link href={routes.orders} className={PILL}>
                 Мои заказы
               </Link>
-              <span className="text-caption text-cream-dim">{user.email}</span>
               {balance.data ? (
                 <TokenChip
                   balance={balance.data.data.balance}
                   generationCost={balance.data.data.generationCost}
                 />
               ) : null}
-              <button type="button" className={PILL} onClick={() => void logout()}>
-                Выйти
-              </button>
+              <div className="border-cream/50 bg-night/60 flex h-12 max-w-72 items-center rounded-full border pr-2 pl-4">
+                <span className="text-caption text-cream-dim min-w-0 truncate" title={user.email}>
+                  {user.email}
+                </span>
+                <button
+                  type="button"
+                  className="text-small ml-2 inline-flex h-8 shrink-0 items-center rounded-full px-4 font-medium text-cream hover:bg-cream/10"
+                  onClick={() => void logout()}
+                >
+                  Выйти
+                </button>
+              </div>
               <Link href={routes.newOrder} className={CREAM_CTA}>
                 Новая комната
               </Link>
@@ -104,6 +112,7 @@ export function AppHeader({ user }: AppHeaderProps) {
           <div className="flex flex-col gap-2">
             {user ? (
               <>
+                <p className="text-caption text-cream-dim truncate">{user.email}</p>
                 {balance.data ? (
                   <TokenChip
                     balance={balance.data.data.balance}
@@ -113,12 +122,12 @@ export function AppHeader({ user }: AppHeaderProps) {
                 <Link href={routes.orders} className="inline-flex min-h-12 items-center" onClick={() => setOpen(false)}>
                   Мои заказы
                 </Link>
-                <Link href={routes.newOrder} className="inline-flex min-h-12 items-center" onClick={() => setOpen(false)}>
-                  Новая комната
-                </Link>
                 <button type="button" className="min-h-12 text-left" onClick={() => void logout()}>
                   Выйти
                 </button>
+                <Link href={routes.newOrder} className={cn(CREAM_CTA, "w-full")} onClick={() => setOpen(false)}>
+                  Новая комната
+                </Link>
               </>
             ) : (
               <>

@@ -96,13 +96,13 @@ export function SubmitStep({ order }: SubmitStepProps) {
               isEdit
                 ? [
                     { title: "Отправка", text: cost ? `Спишем ${tokensLabel(cost)} с баланса` : "Спишем токены с баланса" },
-                    { title: "Правка", text: "Около 15 минут, меняем только выделенное" },
+                    { title: "Правка", text: "Меняем только выделенное" },
                     { title: "Готово", text: "Сравните до и после" },
                   ]
                 : [
                     { title: "Отправка", text: cost ? `Спишем ${tokensLabel(cost)} с баланса` : "Спишем токены с баланса" },
                     { title: "Проверка фото", text: "Если ракурсов мало — попросим догрузить" },
-                    { title: "Генерация", text: "Около 15 минут" },
+                    { title: "Генерация", text: "Несколько вариантов вашего дизайна" },
                     { title: "Готово", text: "Письмо со ссылкой на результат" },
                   ]
             }
@@ -121,7 +121,7 @@ export function SubmitStep({ order }: SubmitStepProps) {
             ))}
           </div>
           <p className="mt-4 text-caption text-ink-tertiary">
-            {isEdit ? "Результат: 3 варианта правки · хранение 90 дней" : "Результат: 3 photoreal JPEG · хранение 90 дней"}
+            Результат в вашем кабинете!
           </p>
           <Link
             href={`${routes.order(order.id)}?step=${isEdit ? "edit" : "photos"}`}

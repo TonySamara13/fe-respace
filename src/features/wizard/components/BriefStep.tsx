@@ -14,7 +14,6 @@ import { Button } from "@/shared/ui/Button";
 import { Chip } from "@/shared/ui/Chip";
 import { Field } from "@/shared/ui/Field";
 import { Input } from "@/shared/ui/Input";
-import { MiniStat } from "@/shared/ui/MiniStat";
 import { Polaroid } from "@/shared/ui/Polaroid";
 import { StyleCard } from "@/shared/ui/StyleCard";
 import { Textarea } from "@/shared/ui/Textarea";
@@ -88,11 +87,11 @@ export function BriefStep({ order }: BriefStepProps) {
             tag="Сканди"
             caption="Гостиная"
           />
-          <div className="mt-6 space-y-4">
-            <MiniStat value="3" label="варианта дизайна" />
-            <MiniStat value="~15" label="минут на генерацию" />
-            <MiniStat value="90" label="дней храним результат" />
-          </div>
+          <ul className="mt-6 space-y-4 text-caption text-ink-secondary">
+            <li>Несколько вариантов вашего дизайна</li>
+            <li>Референсы в один клик</li>
+            <li>Результат в вашем кабинете!</li>
+          </ul>
         </div>
       }
     >

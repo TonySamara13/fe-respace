@@ -68,7 +68,7 @@ export function ModeChoice() {
             "Сохраним планировку, окна и двери",
             "Подходит для ремонта с нуля",
           ]}
-          pill="3 варианта в выбранном стиле"
+          pill="Несколько вариантов дизайна"
           mediaClass="from-muted to-accent-soft"
           cost={cost}
         />
@@ -171,8 +171,6 @@ function ModeCard({
         </ul>
         <span className="mt-5 flex flex-wrap gap-2">
           {cost !== undefined ? <Badge tone="green">{tokensLabel(cost)}</Badge> : null}
-          <Badge>3 варианта</Badge>
-          <Badge>~15 минут</Badge>
         </span>
       </span>
     </button>

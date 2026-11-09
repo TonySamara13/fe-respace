@@ -43,10 +43,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="ru" className={`${cormorant.variable} ${manrope.variable}`}>
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-dvh flex-col">
         <QueryProvider>
           <AppHeader user={user} />
-          <main className="flex-1">{children}</main>
+          <main className="flex flex-1 flex-col">{children}</main>
           <SiteFooter />
         </QueryProvider>
       </body>

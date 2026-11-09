@@ -58,7 +58,7 @@ export function EditDeliveredView({ order }: EditDeliveredViewProps) {
       <div className="mt-4 flex items-end justify-between gap-4">
         <div>
           <h1 className="font-display text-display-s font-medium lg:text-heading">Правка готова</h1>
-          <p className="mt-2 text-caption text-ink-secondary">Точечная правка · 3 варианта · храним 90 дней</p>
+          <p className="mt-2 text-caption text-ink-secondary">Точечная правка</p>
         </div>
         <Badge tone="green">Готово</Badge>
       </div>

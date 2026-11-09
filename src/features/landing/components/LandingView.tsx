@@ -1,9 +1,5 @@
-import Link from "next/link";
-
 import { PackageSection } from "@/features/tokens";
 import type { TokenPackageDtoRs } from "@/shared/api/generated/model";
-import { legalEntity } from "@/shared/config/legalEntity";
-import { routes } from "@/shared/config/routes";
 import { Notice } from "@/shared/ui/Notice";
 
 import { LandingHero } from "./LandingHero";
@@ -29,22 +25,6 @@ export function LandingView({ packages }: LandingViewProps) {
           </Notice>
         </div>
       )}
-      <footer className="text-caption text-cream-dim px-4 py-8 lg:px-12">
-        <p>
-          {legalEntity.ipShortName} · ИНН {legalEntity.inn} · ОГРНИП {legalEntity.ogrnip}
-        </p>
-        <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-2" aria-label="Юридическая информация">
-          <Link href={routes.offer} className="underline-offset-2 hover:underline">
-            Оферта
-          </Link>
-          <Link href={routes.privacy} className="underline-offset-2 hover:underline">
-            Политика ПДн
-          </Link>
-          <Link href={routes.requisites} className="underline-offset-2 hover:underline">
-            Реквизиты ИП
-          </Link>
-        </nav>
-      </footer>
     </div>
   );
 }
