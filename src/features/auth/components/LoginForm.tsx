@@ -70,7 +70,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
       <Button type="submit" block loading={form.formState.isSubmitting}>
         Войти
       </Button>
-      <p className="py-3 text-center text-caption text-ink-tertiary">или</p>
+      <p className="py-4 text-center text-caption text-ink-tertiary">или</p>
       <GoogleButton nextPath={nextPath} />
       <p className="pt-4 text-center text-small text-ink-secondary">
         Нет аккаунта?{" "}

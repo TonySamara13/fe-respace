@@ -67,7 +67,7 @@ export function RegisterForm() {
       <Button type="submit" block loading={form.formState.isSubmitting}>
         Зарегистрироваться
       </Button>
-      <p className="py-3 text-center text-caption text-ink-tertiary">или</p>
+      <p className="py-4 text-center text-caption text-ink-tertiary">или</p>
       <GoogleButton />
       <p className="pt-4 text-center text-small text-ink-secondary">
         Уже есть аккаунт?{" "}

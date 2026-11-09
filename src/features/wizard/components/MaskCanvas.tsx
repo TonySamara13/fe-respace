@@ -53,7 +53,7 @@ export function MaskCanvas({ imageUrl, alt, maskUrl, ref }: MaskCanvasProps) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = "source-in";
-    ctx.fillStyle = "rgba(107, 143, 113, 0.55)";
+    ctx.fillStyle = "rgba(246, 241, 232, 0.55)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = "source-over";
     setMaskLoaded(true);
@@ -98,7 +98,7 @@ export function MaskCanvas({ imageUrl, alt, maskUrl, ref }: MaskCanvasProps) {
       ctx.strokeStyle = "rgba(0,0,0,1)";
     } else {
       ctx.globalCompositeOperation = "source-over";
-      ctx.strokeStyle = "rgba(107, 143, 113, 0.55)";
+      ctx.strokeStyle = "rgba(246, 241, 232, 0.55)";
     }
     ctx.beginPath();
     const from = last.current ?? { x, y };
@@ -117,7 +117,7 @@ export function MaskCanvas({ imageUrl, alt, maskUrl, ref }: MaskCanvasProps) {
     <div>
       <div
         ref={wrapRef}
-        className="relative overflow-hidden rounded-xl bg-muted"
+        className="relative overflow-hidden rounded-2xl bg-muted"
         onPointerDown={(event) => {
           if (!canDraw) return;
           (event.target as HTMLElement).setPointerCapture?.(event.pointerId);
@@ -177,7 +177,7 @@ export function MaskCanvas({ imageUrl, alt, maskUrl, ref }: MaskCanvasProps) {
           />
         ) : null}
       </div>
-      <div className="mt-3 flex flex-wrap items-center gap-2 rounded-full border border-line bg-canvas px-3 py-2">
+      <div className="mt-4 flex flex-wrap items-center gap-2 rounded-full border border-line bg-canvas px-4 py-2">
         <ToolButton active={tool === "brush"} onClick={() => setTool("brush")} label="Кисть">
           <Paintbrush size={16} strokeWidth={1.5} aria-hidden />
         </ToolButton>
@@ -192,7 +192,7 @@ export function MaskCanvas({ imageUrl, alt, maskUrl, ref }: MaskCanvasProps) {
             aria-label={`Размер кисти ${index + 1}`}
             aria-pressed={sizeIndex === index}
             onClick={() => setSizeIndex(index)}
-            className="flex size-11 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+            className="flex size-12 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
           >
             <span
               className={cn(
@@ -244,8 +244,8 @@ function ToolButton({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-small focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
-        active ? "bg-accent text-white" : "text-ink hover:bg-muted",
+        "inline-flex min-h-12 items-center gap-2 rounded-full px-4 text-small focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
+        active ? "bg-accent text-night" : "text-ink hover:bg-muted",
       )}
     >
       {children}

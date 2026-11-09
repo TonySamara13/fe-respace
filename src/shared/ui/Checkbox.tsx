@@ -10,7 +10,7 @@ type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
 
 export function Checkbox({ label, className, id, ref, ...props }: CheckboxProps) {
   return (
-    <label htmlFor={id} className={cn("flex min-h-11 cursor-pointer items-start gap-3", className)}>
+    <label htmlFor={id} className={cn("flex min-h-12 cursor-pointer items-start gap-2", className)}>
       <span className="relative mt-0.5 size-5 shrink-0">
         <input
           ref={ref}
@@ -23,7 +23,7 @@ export function Checkbox({ label, className, id, ref, ...props }: CheckboxProps)
           size={14}
           strokeWidth={2}
           aria-hidden
-          className="pointer-events-none absolute top-0.5 left-0.5 hidden text-white peer-checked:block"
+          className="pointer-events-none absolute top-0.5 left-0.5 hidden text-night peer-checked:block"
         />
       </span>
       <span className="text-caption text-ink-secondary [&_a]:text-accent [&_a]:underline">{label}</span>

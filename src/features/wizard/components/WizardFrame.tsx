@@ -24,7 +24,7 @@ export function WizardFrame({
   return (
     <div
       className={cn(
-        "mx-auto grid w-full max-w-wizard gap-8 px-5 pb-28 xl:items-start xl:gap-12 xl:px-8",
+        "mx-auto grid w-full max-w-wizard gap-8 px-4 pb-28 xl:items-start xl:gap-12 xl:px-8",
         wide
           ? "xl:grid-cols-[240px_minmax(0,880px)]"
           : "xl:grid-cols-[240px_minmax(0,640px)_240px]",
@@ -35,7 +35,7 @@ export function WizardFrame({
           {asideStart}
         </aside>
       ) : null}
-      <section className="relative z-10 rounded-card border border-line bg-surface px-6 py-7 shadow-card lg:px-12 lg:pt-10 lg:pb-11">
+      <section className="relative z-10 rounded-card border border-line bg-surface px-6 py-8 shadow-card lg:px-12 lg:pt-10 lg:pb-12">
         {progress}
         <h1 className="font-display text-display-s font-medium text-ink lg:text-heading">{title}</h1>
         <p className="mt-2 mb-6 text-caption text-ink-secondary">{lead}</p>
@@ -43,7 +43,7 @@ export function WizardFrame({
       </section>
       {asideEnd ? <aside className="hidden xl:block">{asideEnd}</aside> : null}
       {asideStart ? (
-        <details className="rounded-2xl border border-line bg-surface px-4 py-3 xl:hidden">
+        <details className="rounded-2xl border border-line bg-surface px-4 py-4 xl:hidden">
           <summary className="cursor-pointer text-small font-medium">Подсказки</summary>
           <div className="pt-4">{asideStart}</div>
         </details>

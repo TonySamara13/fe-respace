@@ -35,10 +35,10 @@ export function Dropzone({
       onDragOver={(event) => event.preventDefault()}
       onDrop={handleDrop}
     >
-      <ImagePlus className="mb-3 text-accent" strokeWidth={1.5} size={40} aria-hidden />
+      <ImagePlus className="mb-4 text-accent" strokeWidth={1.5} size={40} aria-hidden />
       <span className="font-medium text-ink">{title}</span>
       <span className="mt-2 text-caption text-ink-secondary">{hint}</span>
-      <span className="mt-4 inline-flex min-h-11 items-center rounded-full border border-line-strong px-5 text-small">
+      <span className="mt-4 inline-flex min-h-12 items-center rounded-full border border-line-strong px-6 text-small">
         Выбрать файлы
       </span>
       <input

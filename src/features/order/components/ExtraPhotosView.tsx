@@ -89,7 +89,7 @@ export function ExtraPhotosView({ order }: ExtraPhotosViewProps) {
             pump();
           }}
         />
-        <div className="mb-6 flex flex-wrap gap-3">
+        <div className="mb-6 flex flex-wrap gap-4">
           {photos.map((photo, index) => (
             <PhotoThumb key={photo.id} src={photo.url} alt={`Фото комнаты ${index + 1}`} />
           ))}

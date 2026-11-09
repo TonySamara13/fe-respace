@@ -54,7 +54,7 @@ export function OrderScreen({ orderId, requestedStep, returned = false }: OrderS
   if (orderQuery.isLoading) return <OrderSkeleton />;
   if (!order) {
     return (
-      <div className="mx-auto max-w-form px-5">
+      <div className="mx-auto max-w-form px-4">
         <Notice variant="error" title="Не удалось открыть заказ">
           Обновите страницу или вернитесь к списку заказов.
         </Notice>
@@ -65,7 +65,7 @@ export function OrderScreen({ orderId, requestedStep, returned = false }: OrderS
   return (
     <div className="pb-10">
       {returned ? (
-        <div className="mx-auto mb-6 max-w-form px-5">
+        <div className="mx-auto mb-6 max-w-form px-4">
           <Notice variant="info" title="Проверяем зачисление токенов">
             Когда баланс обновится, нажмите «Отправить на генерацию».
           </Notice>

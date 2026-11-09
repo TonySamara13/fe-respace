@@ -116,7 +116,7 @@ export function BriefStep({ order }: BriefStepProps) {
           </div>
         </Field>
         <Field label="Пресет стиля" htmlFor="stylePresetCode">
-          <div className="grid gap-3 sm:grid-cols-2" id="stylePresetCode">
+          <div className="grid gap-4 sm:grid-cols-2" id="stylePresetCode">
             {(catalog.data?.data.stylePresets ?? []).map((item) => (
               <StyleCard
                 key={item.code}
@@ -142,7 +142,7 @@ export function BriefStep({ order }: BriefStepProps) {
           <summary className="cursor-pointer text-small font-medium text-ink-secondary">
             Размеры комнаты (опционально)
           </summary>
-          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <Field label="Длина, см" htmlFor="lengthCm" error={form.formState.errors.lengthCm?.message}>
               <Input id="lengthCm" inputMode="numeric" {...form.register("lengthCm")} />
             </Field>
@@ -154,7 +154,7 @@ export function BriefStep({ order }: BriefStepProps) {
             </Field>
           </div>
         </details>
-        <div className="sticky bottom-0 -mx-6 flex justify-end border-t border-line bg-canvas px-6 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0">
+        <div className="sticky bottom-0 -mx-6 flex justify-end border-t border-line bg-canvas px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0">
           <Button type="submit" loading={update.isPending}>
             Далее — фото
           </Button>

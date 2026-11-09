@@ -19,7 +19,7 @@ export function LandingHero() {
         />
         <div className="from-night to-night pointer-events-none absolute inset-0 bg-linear-to-b via-transparent" />
       </div>
-      <div className="mx-auto w-full max-w-5xl px-5 pt-1 pb-8 lg:px-12 lg:pb-10">
+      <div className="mx-auto w-full max-w-5xl px-4 pt-2 pb-8 lg:px-12 lg:pb-10">
         <h1 className="font-display text-display-hero text-cream max-w-4xl font-medium lg:text-display-cinema">
           Воплотите интерьер своей мечты вместе с Целлой
         </h1>
@@ -29,7 +29,7 @@ export function LandingHero() {
         </p>
         <Link
           href={routes.newOrder}
-          className="bg-surface text-night shadow-panel focus-visible:ring-cream mt-7 inline-flex min-h-12 items-center rounded-full px-8 text-body font-semibold focus-visible:ring-2 focus-visible:outline-none"
+          className="bg-cream text-night shadow-panel focus-visible:ring-cream mt-8 inline-flex min-h-12 items-center rounded-full px-8 text-body font-medium focus-visible:ring-2 focus-visible:outline-none"
         >
           Создать проект
         </Link>

@@ -15,9 +15,9 @@ export default function DevUiPage() {
   if (process.env.NODE_ENV === "production") notFound();
 
   return (
-    <div className="mx-auto max-w-content space-y-8 px-5 py-8 lg:px-8">
+    <div className="mx-auto max-w-content space-y-8 px-4 py-8 lg:px-8">
       <h1 className="font-display text-display-s font-medium lg:text-heading">Компоненты</h1>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-4">
         <Button>Основная</Button>
         <Button variant="ghost">Вторичная</Button>
         <Button disabled>Недоступна</Button>

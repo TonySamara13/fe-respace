@@ -19,10 +19,10 @@ type PackageSectionProps = {
 
 export function PackageSection({ packages }: PackageSectionProps) {
   return (
-    <section id="packs" className="px-5 py-10 lg:px-12 lg:py-16">
+    <section id="packs" className="px-4 py-10 lg:px-12 lg:py-16">
       <h2 className="font-display text-display-s text-cream font-medium lg:text-display-lg">Тарифы</h2>
-      <p className="text-body text-cream-dim mt-3 max-w-md">Для новых комнат и точечных правок.</p>
-      <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,1fr)] lg:items-stretch lg:pt-3">
+      <p className="text-body text-cream-dim mt-4 max-w-md">Для новых комнат и точечных правок.</p>
+      <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,1fr)] lg:items-stretch lg:pt-4">
         {packages.map((item) => {
           const featured = item.code === DEFAULT_PACK_CODE;
           const frame = TARIFF_FRAMES[item.code];
@@ -40,14 +40,14 @@ export function PackageSection({ packages }: PackageSectionProps) {
                   <Image src={frame} alt="" fill className="object-cover" sizes="400px" />
                 </div>
               ) : null}
-              <div className="flex flex-1 flex-col gap-1 px-5 py-5">
-                <p className={cn("text-small", featured ? "text-ink-secondary" : "text-cream-dim")}>
+              <div className="flex flex-1 flex-col gap-2 px-6 py-6">
+                <p className={cn("text-small", featured ? "text-night/70" : "text-cream-dim")}>
                   {packTitle(item.code)}
                 </p>
                 <p className="font-display text-display-lg leading-none font-medium lining-nums">
                   {new Intl.NumberFormat("ru-RU").format(item.tokens)}
                 </p>
-                <p className={cn("text-small", featured ? "text-ink-secondary" : "text-cream-dim")}>
+                <p className={cn("text-small", featured ? "text-night/70" : "text-cream-dim")}>
                   токенов
                 </p>
                 <p className="mt-auto pt-4 text-title font-semibold tabular-nums">{formatRub(item.price)}</p>

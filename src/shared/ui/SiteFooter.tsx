@@ -10,7 +10,7 @@ export function SiteFooter() {
   if (usePathname() === routes.home) return null;
 
   return (
-    <footer className="mx-auto w-full max-w-content px-5 py-8 text-caption text-ink-tertiary lg:px-8">
+    <footer className="mx-auto w-full max-w-content px-4 py-8 text-caption text-ink-tertiary lg:px-8">
       <p className="mb-3">
         {legalEntity.ipShortName} · ИНН {legalEntity.inn} · ОГРНИП {legalEntity.ogrnip} ·{" "}
         <a href={`mailto:${legalEntity.email}`} className="underline-offset-2 hover:underline">

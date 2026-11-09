@@ -29,7 +29,7 @@ export function EmailNotVerified() {
       <p className="mt-3 text-ink-secondary">
         Создание заказа доступно после подтверждения email. Откройте письмо и введите код по ссылке.
       </p>
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         {message ? <Toast>{message}</Toast> : null}
         {error ? <Toast variant="error">{error}</Toast> : null}
         <Button loading={resend.isPending} onClick={() => void onResend()}>

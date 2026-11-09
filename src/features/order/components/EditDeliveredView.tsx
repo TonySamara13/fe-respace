@@ -11,7 +11,7 @@ import { isApiError } from "@/shared/api/errors";
 import { routes } from "@/shared/config/routes";
 import { tokensLabel } from "@/shared/lib/plural";
 import { Badge } from "@/shared/ui/Badge";
-import { Button } from "@/shared/ui/Button";
+import { Button, primaryLinkClass } from "@/shared/ui/Button";
 import { cn } from "@/shared/lib/cn";
 
 import { editAreaLabel } from "@/features/wizard";
@@ -51,14 +51,14 @@ export function EditDeliveredView({ order }: EditDeliveredViewProps) {
   }
 
   return (
-    <section className="mx-auto max-w-content px-5 pb-16 lg:px-8">
+    <section className="mx-auto max-w-content px-4 pb-16 lg:px-8">
       <Link href={routes.orders} className="text-caption text-ink-secondary">
         ← Мои заказы
       </Link>
-      <div className="mt-3 flex items-end justify-between gap-4">
+      <div className="mt-4 flex items-end justify-between gap-4">
         <div>
           <h1 className="font-display text-display-s font-medium lg:text-heading">Правка готова</h1>
-          <p className="mt-1.5 text-caption text-ink-secondary">Точечная правка · 3 варианта · храним 90 дней</p>
+          <p className="mt-2 text-caption text-ink-secondary">Точечная правка · 3 варианта · храним 90 дней</p>
         </div>
         <Badge tone="green">Готово</Badge>
       </div>
@@ -68,20 +68,20 @@ export function EditDeliveredView({ order }: EditDeliveredViewProps) {
             <CompareSlider beforeUrl={original.url} afterUrl={selected.url} />
           ) : selected ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={selected.url} alt="Результат правки" className="w-full rounded-xl" />
+            <img src={selected.url} alt="Результат правки" className="w-full rounded-2xl" />
           ) : null}
         </div>
         <div>
           {request ? (
-            <blockquote className="rounded-2xl bg-canvas px-5 py-4">
+            <blockquote className="rounded-2xl bg-canvas px-4 py-4">
               <p className="text-label font-medium tracking-wide text-ink-tertiary uppercase">
                 Ваш запрос · {editAreaLabel(request.area).toLowerCase()}
               </p>
               <p className="mt-2 text-body">{request.instruction}</p>
             </blockquote>
           ) : null}
-          <p className="mt-7 mb-3 text-label font-medium tracking-wide text-ink-tertiary uppercase">Варианты</p>
-          <div className="grid grid-cols-3 gap-3">
+          <p className="mt-8 mb-4 text-label font-medium tracking-wide text-ink-tertiary uppercase">Варианты</p>
+          <div className="grid grid-cols-3 gap-2">
             {images.map((item, index) => (
               <button
                 key={item.id}
@@ -96,7 +96,7 @@ export function EditDeliveredView({ order }: EditDeliveredViewProps) {
                 <img src={item.url} alt={`Вариант ${index + 1}`} className="aspect-square w-full object-cover" />
                 <span
                   className={cn(
-                    "block py-1.5 text-center text-caption",
+                    "block py-2 text-center text-caption",
                     selected?.id === item.id ? "font-medium text-accent" : "text-ink-secondary",
                   )}
                 >
@@ -106,12 +106,12 @@ export function EditDeliveredView({ order }: EditDeliveredViewProps) {
             ))}
           </div>
           {selected ? (
-            <div className="mt-7 grid gap-3">
+            <div className="mt-8 grid gap-4">
               <a
                 href={selected.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-7 py-3 text-body font-medium text-white hover:bg-accent-hover"
+                className={primaryLinkClass}
               >
                 Скачать вариант {(selected.position ?? 0) + 1} · JPEG
               </a>
@@ -122,7 +122,7 @@ export function EditDeliveredView({ order }: EditDeliveredViewProps) {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center text-small text-ink-secondary underline"
+                    className="inline-flex min-h-12 items-center text-small text-ink-secondary underline"
                   >
                     Скачать вариант {index + 1}
                   </a>
@@ -130,7 +130,7 @@ export function EditDeliveredView({ order }: EditDeliveredViewProps) {
               </div>
             </div>
           ) : null}
-          <div className="mt-7 rounded-card border border-line bg-surface p-6">
+          <div className="mt-8 rounded-card border border-line bg-surface p-6">
             <p className="font-medium">Поправить что-то ещё?</p>
             <p className="mt-1 text-caption text-ink-secondary">
               Новая правка начнётся с выбранного варианта

@@ -11,7 +11,7 @@ type PhotoThumbProps = {
 export function PhotoThumb({ src, alt, progress, error, onRemove }: PhotoThumbProps) {
   return (
     <div className="w-30">
-      <div className="relative size-30 overflow-hidden rounded-xl bg-muted">
+      <div className="relative size-30 overflow-hidden rounded-2xl bg-muted">
         {src ? (
           // presigned URL произвольного хоста
           // eslint-disable-next-line @next/next/no-img-element

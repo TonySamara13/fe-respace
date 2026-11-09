@@ -8,7 +8,7 @@ type PolaroidProps = {
 export function Polaroid({ src, tag, caption, rotate = "left" }: PolaroidProps) {
   return (
     <figure
-      className={`hidden w-40 bg-surface p-2.5 pb-3.5 shadow-card lg:block ${rotate === "left" ? "-rotate-2" : "rotate-3"} rounded-md`}
+      className={`hidden w-40 rounded-lg bg-surface p-2 pb-4 shadow-card lg:block ${rotate === "left" ? "-rotate-2" : "rotate-3"}`}
       aria-hidden
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

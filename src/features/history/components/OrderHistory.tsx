@@ -7,7 +7,7 @@ import { useListOrders } from "@/shared/api/generated/history/history";
 import { routes } from "@/shared/config/routes";
 import { formatDate } from "@/shared/lib/date";
 import { Badge } from "@/shared/ui/Badge";
-import { Button } from "@/shared/ui/Button";
+import { Button, primaryLinkClass } from "@/shared/ui/Button";
 import { statusBadge } from "@/features/order";
 
 const PAGE_SIZE = 20;
@@ -23,13 +23,10 @@ export function OrderHistory() {
 
   if (!data || data.items.length === 0) {
     return (
-      <div className="mx-auto max-w-form px-5 py-8 text-center">
+      <div className="mx-auto max-w-form px-4 py-8 text-center">
         <h1 className="font-display text-display-s font-medium lg:text-heading">Мои заказы</h1>
-        <p className="mt-3 text-ink-secondary">Пока нет заказов. Создайте первую комнату.</p>
-        <Link
-          href={routes.newOrder}
-          className="mt-6 inline-flex min-h-11 items-center rounded-full bg-accent px-7 py-3 text-body font-medium text-white"
-        >
+        <p className="mt-4 text-ink-secondary">Пока нет заказов. Создайте первую комнату.</p>
+        <Link href={routes.newOrder} className={`mt-6 ${primaryLinkClass}`}>
           Новая комната
         </Link>
       </div>
@@ -37,7 +34,7 @@ export function OrderHistory() {
   }
 
   return (
-    <div className="mx-auto max-w-form px-5 py-8">
+    <div className="mx-auto max-w-form px-4 py-8">
       <h1 className="font-display text-display-s font-medium lg:text-heading">Мои заказы</h1>
       <ul className="mt-8 rounded-card border border-line bg-surface px-6">
         {data.items.map((item) => {

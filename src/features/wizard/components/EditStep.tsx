@@ -247,13 +247,13 @@ export function EditStep({ order }: EditStepProps) {
                 />
               )}
             </Field>
-            <p className="mt-4 flex gap-2 rounded-2xl bg-accent-soft px-4 py-3 text-caption text-ink">
+            <p className="mt-4 flex gap-2 rounded-2xl bg-accent-soft px-4 py-4 text-caption text-ink">
               <ShieldCheck className="mt-0.5 size-4 shrink-0 text-accent" strokeWidth={1.5} aria-hidden />
               Мебель, свет и ракурс вне выделения останутся как на исходном фото
             </p>
           </div>
         </div>
-        <div className="sticky bottom-0 -mx-6 mt-8 flex items-center justify-between gap-3 border-t border-line bg-canvas px-6 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0">
+        <div className="sticky bottom-0 -mx-6 mt-8 flex items-center justify-between gap-4 border-t border-line bg-canvas px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0">
           <button
             type="button"
             className="text-small text-ink-secondary underline"

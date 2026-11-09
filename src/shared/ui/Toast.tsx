@@ -10,7 +10,7 @@ export function Toast({ variant = "info", children }: ToastProps) {
     <p
       role={variant === "error" ? "alert" : "status"}
       className={cn(
-        "rounded-xl px-4 py-3 text-small",
+        "rounded-2xl px-4 py-2 text-small",
         variant === "error" ? "bg-error-bg text-error" : "border border-line bg-surface text-ink",
       )}
     >

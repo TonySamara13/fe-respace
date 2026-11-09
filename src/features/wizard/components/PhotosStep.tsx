@@ -134,7 +134,7 @@ export function PhotosStep({ order }: PhotosStepProps) {
       }
     >
       <Dropzone disabled={uploaded.length >= order.maxPhotos} onFiles={enqueue} />
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-4">
         {uploaded.map((photo, index) => (
           <PhotoThumb
             key={photo.id}
@@ -163,7 +163,7 @@ export function PhotosStep({ order }: PhotosStepProps) {
       {uploaded.length === 0 ? (
         <p className="mt-2 text-caption text-ink-secondary">Нужно хотя бы одно фото</p>
       ) : null}
-      <div className="mt-8 flex items-center justify-between gap-3">
+      <div className="mt-8 flex items-center justify-between gap-4">
         <Link href={`${routes.order(order.id)}?step=brief`} className="text-small text-ink-secondary underline">
           Назад
         </Link>

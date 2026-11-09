@@ -14,7 +14,7 @@ type FieldProps = {
 export function Field({ label, htmlFor, error, hint, className, children }: FieldProps) {
   const describedBy = error ? `${htmlFor}-error` : hint ? `${htmlFor}-hint` : undefined;
   return (
-    <div className={cn("mb-4 flex flex-col gap-1.5", className)}>
+    <div className={cn("mb-4 flex flex-col gap-2", className)}>
       <label htmlFor={htmlFor} className="text-label font-medium text-ink-secondary">
         {label}
       </label>

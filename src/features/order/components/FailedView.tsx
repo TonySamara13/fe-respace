@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { OrderDtoRs } from "@/shared/api/generated/model";
 import { routes } from "@/shared/config/routes";
 import { Badge } from "@/shared/ui/Badge";
+import { primaryLinkClass } from "@/shared/ui/Button";
 import { Toast } from "@/shared/ui/Toast";
 
 type FailedViewProps = {
@@ -22,7 +23,7 @@ export function FailedView({ order }: FailedViewProps) {
       </div>
       <Link
         href={routes.newOrder}
-        className="mt-8 inline-flex min-h-11 items-center rounded-full bg-accent px-7 py-3 text-body font-medium text-white"
+        className={`mt-8 ${primaryLinkClass}`}
       >
         Новая комната
       </Link>

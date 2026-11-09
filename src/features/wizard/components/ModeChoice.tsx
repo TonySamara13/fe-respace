@@ -51,7 +51,7 @@ export function ModeChoice() {
   if (unverified) return <EmailNotVerified />;
 
   return (
-    <div className="mx-auto max-w-content px-5 pb-16 lg:px-8">
+    <div className="mx-auto max-w-content px-4 pb-16 lg:px-8">
       <div className="mb-10 text-center">
         <p className="mb-3 text-label font-medium tracking-wide text-accent uppercase">Новая комната</p>
         <h1 className="font-display text-display-s font-medium lg:text-heading">Что хотите сделать?</h1>
@@ -152,8 +152,8 @@ function ModeCard({
           {pill}
         </span>
       </span>
-      <span className="block px-6 py-5">
-        <span className="flex items-start justify-between gap-3">
+      <span className="block px-6 py-6">
+        <span className="flex items-start justify-between gap-4">
           <span className="font-display text-title font-medium">{title}</span>
           <span
             className={cn(

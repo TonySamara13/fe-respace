@@ -1,4 +1,4 @@
-# Дизайн-система — Scandinavian Light
+# Дизайн-система — Титры
 
 Источник: [../../figma/design-tokens/tokens.json](../../figma/design-tokens/tokens.json), [../../figma/html/shared.css](../../figma/html/shared.css), [../../figma/spec/components.md](../../figma/spec/components.md).
 При расхождении макета и этого файла — сверяться с HTML-макетом в браузере и обновить этот файл.
@@ -12,22 +12,22 @@
 
 @theme {
   /* Цвета */
-  --color-canvas: #F5F0EB;          /* фон страницы */
-  --color-surface: #FFFFFF;         /* карточки, поля */
-  --color-muted: #E8E0D6;           /* трек прогресса, disabled */
-  --color-ink: #2C3328;             /* основной текст, тёмная лента «Выгодно» */
-  --color-ink-secondary: #5A6358;
-  --color-ink-tertiary: #8A9188;
-  --color-accent: #6B8F71;
-  --color-accent-hover: #5A7D60;
-  --color-accent-soft: #E8F0E9;     /* зелёный бейдж */
-  --color-line: #E8E0D6;            /* обычная рамка */
-  --color-line-strong: #C4BDB4;     /* ghost-кнопка, dropzone, линия timeline */
-  --color-error: #B54A4A;
-  --color-error-bg: #FDF0F0;
-  --color-warning: #A67C52;
-  --color-warning-bg: #FBF4EA;
-  --color-warning-border: #E9D7BF;
+  --color-canvas: #0C0C0B;          /* фон страницы */
+  --color-surface: #161513;         /* карточки, поля */
+  --color-muted: #2A2824;           /* трек прогресса, disabled */
+  --color-ink: #F6F1E8;             /* основной текст */
+  --color-ink-secondary: #CFC6B8;
+  --color-ink-tertiary: #8D877E;
+  --color-accent: #F6F1E8;          /* основная кнопка, текст на ней — night */
+  --color-accent-hover: #E4D8C4;
+  --color-accent-soft: #2A2824;
+  --color-line: #34322C;
+  --color-line-strong: #6B6560;
+  --color-error: #F0B4B4;
+  --color-error-bg: #2A1717;
+  --color-warning: #E4C79A;
+  --color-warning-bg: #2A2318;
+  --color-warning-border: #6B5840;
 
   /* Шрифты: переменные задаёт next/font в layout.tsx */
   --font-display: var(--font-cormorant), Georgia, serif;
@@ -40,21 +40,21 @@
   --text-display-s: 28px;   --text-display-s--line-height: 1.2;    /* H2 секции на mobile */
   --text-heading: 32px;     --text-heading--line-height: 1.15;
   --text-title: 24px;       --text-title--line-height: 1.2;
-  --text-body-lg: 17px;     --text-body-lg--line-height: 1.5;
-  --text-body: 15px;        --text-body--line-height: 1.5;
+  --text-body-lg: 18px;     --text-body-lg--line-height: 1.5;
+  --text-body: 16px;        --text-body--line-height: 1.5;
   --text-small: 14px;       --text-small--line-height: 1.5;
-  --text-caption: 13px;     --text-caption--line-height: 1.5;
+  --text-caption: 14px;     --text-caption--line-height: 1.5;
   --text-label: 12px;       --text-label--line-height: 1.4;
-  --text-micro: 11px;       --text-micro--line-height: 1.3;
+  --text-micro: 12px;       --text-micro--line-height: 1.3;
   --text-price: 26px;       --text-price--line-height: 1.2;   /* цена пакета */
   --text-stat: 30px;        --text-stat--line-height: 1;      /* число MiniStat */
 
   /* Радиусы, которых нет в Tailwind по умолчанию */
-  --radius-card: 20px;
+  --radius-card: 16px;
 
   /* Тени */
-  --shadow-card: 0 4px 24px rgba(44, 51, 40, 0.06);
-  --shadow-panel: 0 12px 48px rgba(44, 51, 40, 0.07);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-panel: 0 12px 40px rgba(0, 0, 0, 0.45);
 
   /* Контейнеры (max-w-*) */
   --container-content: 1100px;
@@ -68,7 +68,7 @@ body {
 }
 ```
 
-Шкала отступов — стандартная Tailwind (шаг 4 px): токены макета 8 / 12 / 16 / 20 / 24 / 32 / 40 / 48 / 64 = `2 / 3 / 4 / 5 / 6 / 8 / 10 / 12 / 16`.
+Шкала отступов — шаг 8 px: 8 / 16 / 24 / 32 / 40 / 48 / 64 = `2 / 4 / 6 / 8 / 10 / 12 / 16`. Поле страницы — `px-4` (16) и `lg:px-8` (32).
 
 ### Радиусы
 
@@ -79,7 +79,7 @@ body {
 | 8 px (input) | `rounded-lg` |
 | 12 px (превью фото, результат, toast) | `rounded-xl` |
 | 16 px (style card, dropzone, notice) | `rounded-2xl` |
-| 20 px (card, pack card) | `rounded-card` |
+| 16 px (card, кадр, toast) | `rounded-card` или `rounded-2xl` |
 | 24 px | `rounded-3xl` |
 | pill (кнопки, chip, badge) | `rounded-full` |
 
@@ -114,26 +114,16 @@ body {
 
 | Пара | Контраст | Норма AA |
 |------|----------|----------|
-| Белый текст на `accent` | 3.6 : 1 | 4.5 : 1 для текста < 18 px |
-| `ink-tertiary` на `canvas` | 2.9 : 1 | 4.5 : 1 |
-| `ink-secondary` на `canvas` | 5.5 : 1 | ок |
-| `ink` на `canvas` | 11.5 : 1 | ок |
+| `night` на `accent` / `cream` | высокий | ок для кнопок |
+| `ink-tertiary` на `canvas` | около 5 : 1 | ок для подписей |
+| `ink` на `canvas` | высокий | ок |
 
-Палитра кабинета и мастера остаётся Scandinavian Light. Главная «Титры» использует отдельные токены, решение от 2026-11-09:
+Весь сайт — тёмная палитра «Титры», решение от 2026-11-09. `night`, `cream` и `night-raised` совпадают с `canvas`, `ink` и `surface` и остаются для кадров главной.
 
-| Токен | Значение | Роль |
-|-------|----------|------|
-| `night` | `#0C0C0B` | фон главной |
-| `night-raised` | `#161513` | карточка тарифа |
-| `cream` | `#F6F1E8` | заголовок и текст на тёмном |
-| `cream-dim` | `#CFC6B8` | вторичный текст на тёмном |
-| `night-line` | `#34322C` | линия шагов |
+`display-hero` 40 px — H1 главной на телефоне, `display-cinema` 72 px — на `lg`. Кнопка «Создать проект» — `bg-cream` и `text-night`.
 
-`display-hero` 40 px — H1 главной на телефоне, `display-cinema` 72 px — на `lg`. Кнопка «Создать проект» под заголовком — `bg-surface` (белый) и `text-night`, не цвет текста.
-
-Палитру кабинета не менять без отдельного решения. До него:
-
-- `ink-tertiary` — только для второстепенного текста (подписи «за комнату», футер, даты), **никогда** для ошибок, цен, подсказок, без которых не пройти шаг.
+- Текст на `accent` — `text-night`, не белый.
+- `ink-tertiary` — только для второстепенного текста (подписи, футер, даты), никогда для ошибок, цен и подсказок, без которых не пройти шаг.
 - Текст ошибок — `text-error`, важные подсказки — `text-ink-secondary`.
 
 ## Адаптив
@@ -142,10 +132,10 @@ body {
 
 | Блок | Mobile | Desktop |
 |------|--------|---------|
-| Контейнер | `px-5` | `max-w-content mx-auto px-8` |
+| Контейнер | `px-4` | `max-w-content mx-auto px-8` |
 | Секция лендинга | `py-10` | `lg:py-16` |
 | Wizard | одна колонка: форма, под ней подсказки (свёрнуты в `<details>`) | `xl:` сетка `240px / minmax(0,640px) / 240px`, gap 48, `max-w-wizard`; шаг отправки — `240px / minmax(0,880px)` |
-| Карточка формы wizard | `px-6 py-7` | `lg:px-12 lg:pt-10 lg:pb-11` |
+| Карточка формы wizard | `px-6 py-8` | `lg:px-12 lg:pt-10 lg:pb-12` |
 | Пакеты токенов | строки: токены слева, цена справа | `md:` сетка из 3 колонок |
 | Галерея результатов | 1 колонка | `md:` 3 колонки, aspect 4:3 |
 | Auth | карточка на всю ширину, polaroid и line-art скрыты | центр `max-w-auth`, polaroid «До/После» по бокам (`lg:block`) |
@@ -166,8 +156,8 @@ body {
 
 | Компонент | Ключевые параметры | Макет |
 |-----------|--------------------|-------|
-| `Button` | `primary` (accent → hover accent-hover), `ghost` (рамка line-strong), `disabled` (muted / ink-tertiary); `px-7 py-3 rounded-full text-body font-medium`; `block` — на всю ширину; `loading` — спиннер, текст не прыгает | 14 |
-| `Input` / `Textarea` | `h-11 px-4 rounded-lg border-line bg-surface`; focus — кольцо accent 2 px; error — рамка error + helper `text-caption`; textarea min-h 120 | 14 |
+| `Button` | `primary` (accent → hover accent-hover), `ghost` (рамка line-strong), `disabled` (muted / ink-tertiary); `min-h-12 px-8 py-2 rounded-full text-body font-medium`; иконка и подпись в одном ряду; `block` — на всю ширину; `loading` — спиннер, текст не прыгает | 14 |
+| `Input` / `Textarea` | `h-12 px-4 rounded-lg border-line bg-surface text-body`; focus — кольцо accent 2 px; error — рамка error + helper `text-caption`; textarea `min-h-32` | 14 |
 | `Field` | label `text-label font-medium text-ink-secondary`, gap 6 px, отступ снизу 16 | |
 | `Checkbox` | 20×20, `rounded-sm`, checked — accent; label `text-caption`, ссылки подчёркнуты accent | 08, 16 |
 | `Chip` | `px-4 py-2.5 rounded-full bg-canvas text-small`; selected — accent + белый текст | 06 |

@@ -23,17 +23,17 @@ export function LandingView({ packages }: LandingViewProps) {
       {packages ? (
         <PackageSection packages={packages} />
       ) : (
-        <div className="mx-auto max-w-form px-5 py-10">
+        <div className="mx-auto max-w-form px-4 py-10">
           <Notice variant="error" title="Не удалось загрузить тарифы">
             Обновите страницу чуть позже.
           </Notice>
         </div>
       )}
-      <footer className="text-caption text-cream-dim px-5 py-8 lg:px-12">
+      <footer className="text-caption text-cream-dim px-4 py-8 lg:px-12">
         <p>
           {legalEntity.ipShortName} · ИНН {legalEntity.inn} · ОГРНИП {legalEntity.ogrnip}
         </p>
-        <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-2" aria-label="Юридическая информация">
+        <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-2" aria-label="Юридическая информация">
           <Link href={routes.offer} className="underline-offset-2 hover:underline">
             Оферта
           </Link>

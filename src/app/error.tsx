@@ -9,7 +9,7 @@ type ErrorPageProps = {
 
 export default function ErrorPage({ reset }: ErrorPageProps) {
   return (
-    <section className="relative mx-auto max-w-form px-5 py-16 text-center">
+    <section className="relative mx-auto max-w-form px-4 py-16 text-center">
       <Deco variant="plant" className="absolute bottom-0 left-0 w-24" />
       <div className="relative z-10 rounded-card border border-line bg-surface px-8 py-12 shadow-card">
         <h1 className="font-display text-display-s font-medium lg:text-heading">Что-то пошло не так</h1>

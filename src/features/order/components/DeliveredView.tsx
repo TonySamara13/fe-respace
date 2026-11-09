@@ -7,6 +7,7 @@ import { useGetTokenBalance } from "@/shared/api/generated/tokens/tokens";
 import { routes } from "@/shared/config/routes";
 import { plural, tokensLabel } from "@/shared/lib/plural";
 import { Badge } from "@/shared/ui/Badge";
+import { primaryLinkClass } from "@/shared/ui/Button";
 
 import { EditDeliveredView } from "./EditDeliveredView";
 
@@ -23,7 +24,7 @@ export function DeliveredView({ order }: DeliveredViewProps) {
   const title = [order.brief?.roomTypeName, order.brief?.stylePresetName].filter(Boolean).join(" · ");
 
   return (
-    <section className="mx-auto max-w-content px-5 pb-16 lg:px-8">
+    <section className="mx-auto max-w-content px-4 pb-16 lg:px-8">
       <Badge tone="green">Готово</Badge>
       <h1 className="mt-4 font-display text-display-s font-medium lg:text-heading">Ваш новый интерьер</h1>
       <p className="mt-2 text-caption text-ink-secondary">
@@ -34,7 +35,7 @@ export function DeliveredView({ order }: DeliveredViewProps) {
         {order.results
           .filter((result) => result.kind !== ResultKind.ORIGINAL)
           .map((result) => (
-          <figure key={`${result.kind}-${result.position}`} className="overflow-hidden rounded-xl bg-muted">
+          <figure key={`${result.kind}-${result.position}`} className="overflow-hidden rounded-2xl bg-muted">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={result.url}
@@ -66,7 +67,7 @@ export function DeliveredView({ order }: DeliveredViewProps) {
         </div>
         <Link
           href={routes.newOrder}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-7 py-3 text-body font-medium text-white hover:bg-accent-hover"
+          className={primaryLinkClass}
         >
           Новая комната
         </Link>

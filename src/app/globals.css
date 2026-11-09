@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-canvas: #f5f0eb;
-  --color-surface: #ffffff;
-  --color-muted: #e8e0d6;
-  --color-ink: #2c3328;
-  --color-ink-secondary: #5a6358;
-  --color-ink-tertiary: #8a9188;
-  --color-accent: #6b8f71;
-  --color-accent-hover: #5a7d60;
-  --color-accent-soft: #e8f0e9;
-  --color-line: #e8e0d6;
-  --color-line-strong: #c4bdb4;
-  --color-error: #b54a4a;
-  --color-error-bg: #fdf0f0;
-  --color-warning: #a67c52;
-  --color-warning-bg: #fbf4ea;
-  --color-warning-border: #e9d7bf;
+  --color-canvas: #0c0c0b;
+  --color-surface: #161513;
+  --color-muted: #2a2824;
+  --color-ink: #f6f1e8;
+  --color-ink-secondary: #cfc6b8;
+  --color-ink-tertiary: #8d877e;
+  --color-accent: #f6f1e8;
+  --color-accent-hover: #e4d8c4;
+  --color-accent-soft: #2a2824;
+  --color-line: #34322c;
+  --color-line-strong: #6b6560;
+  --color-error: #f0b4b4;
+  --color-error-bg: #2a1717;
+  --color-warning: #e4c79a;
+  --color-warning-bg: #2a2318;
+  --color-warning-border: #6b5840;
   --color-night: #0c0c0b;
   --color-night-raised: #161513;
   --color-cream: #f6f1e8;
@@ -42,27 +42,27 @@
   --text-heading--line-height: 1.15;
   --text-title: 24px;
   --text-title--line-height: 1.2;
-  --text-body-lg: 17px;
+  --text-body-lg: 18px;
   --text-body-lg--line-height: 1.5;
-  --text-body: 15px;
+  --text-body: 16px;
   --text-body--line-height: 1.5;
   --text-small: 14px;
   --text-small--line-height: 1.5;
-  --text-caption: 13px;
+  --text-caption: 14px;
   --text-caption--line-height: 1.5;
   --text-label: 12px;
   --text-label--line-height: 1.4;
-  --text-micro: 11px;
+  --text-micro: 12px;
   --text-micro--line-height: 1.3;
   --text-price: 26px;
   --text-price--line-height: 1.2;
   --text-stat: 30px;
   --text-stat--line-height: 1;
 
-  --radius-card: 20px;
+  --radius-card: 16px;
 
-  --shadow-card: 0 4px 24px rgba(44, 51, 40, 0.06);
-  --shadow-panel: 0 12px 48px rgba(44, 51, 40, 0.07);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-panel: 0 12px 40px rgba(0, 0, 0, 0.45);
 
   --container-content: 1100px;
   --container-wizard: 1280px;

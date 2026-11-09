@@ -98,7 +98,7 @@ export function TokenShop({ packages, orderId, returned = false }: TokenShopProp
     wallet && selected ? wallet.balance + selected.tokens : undefined;
 
   return (
-    <div className="mx-auto w-full max-w-content px-5 pb-16 lg:px-8">
+    <div className="mx-auto w-full max-w-content px-4 pb-16 lg:px-8">
       {orderId ? (
         <Link href={routes.order(orderId)} className="text-caption text-ink-secondary">
           ← Вернуться к заказу{roomTitle ? ` «${roomTitle}»` : ""}
